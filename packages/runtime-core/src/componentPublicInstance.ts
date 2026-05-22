@@ -657,8 +657,6 @@ export function createDevRenderContext(instance: ComponentInternalInstance) {
       configurable: true,
       enumerable: false,
       get: () => publicPropertiesMap[key](instance),
-      // intercepted by the proxy so no need for implementation,
-      // but needed to prevent set errors
       set: NOOP,
     })
   })

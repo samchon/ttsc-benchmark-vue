@@ -469,19 +469,22 @@ test('local asset registration should not affect other local apps', () => {
   ).not.toHaveBeenWarned()
 })
 
-test('local app-level mixin registration should not affect other local apps', () => {
-  const app1 = createApp({ render: () => h('div') })
-  const app2 = createApp({})
+test(
+  'local app-level mixin registration should not affect other local apps',
+  () => {
+    const app1 = createApp({ render: () => h('div') })
+    const app2 = createApp({})
 
-  const mixin = { created: vi.fn() }
-  app1.mixin(mixin)
-  app2.mixin(mixin)
+    const mixin = { created: vi.fn() }
+    app1.mixin(mixin)
+    app2.mixin(mixin)
 
-  expect(`Mixin has already been applied`).not.toHaveBeenWarned()
+    expect(`Mixin has already been applied`).not.toHaveBeenWarned()
 
-  app1.mount(document.createElement('div'))
-  expect(mixin.created).toHaveBeenCalledTimes(1)
-})
+    app1.mount(document.createElement('div'))
+    expect(mixin.created).toHaveBeenCalledTimes(1)
+  },
+)
 
 // #5699
 test('local app config should not affect other local apps in v3 mode', () => {

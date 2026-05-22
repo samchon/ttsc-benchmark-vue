@@ -957,10 +957,13 @@ function baseCreateRenderer(
     }
 
     if ((vnodeHook = newProps.onVnodeUpdated) || dirs) {
-      queuePostRenderEffect(() => {
-        vnodeHook && invokeVNodeHook(vnodeHook, parentComponent, n2, n1)
-        dirs && invokeDirectiveHook(n2, n1, parentComponent, 'updated')
-      }, parentSuspense)
+      queuePostRenderEffect(
+        () => {
+          vnodeHook && invokeVNodeHook(vnodeHook, parentComponent, n2, n1)
+          dirs && invokeDirectiveHook(n2, n1, parentComponent, 'updated')
+        },
+        parentSuspense,
+      )
     }
   }
 
@@ -2357,9 +2360,12 @@ function baseCreateRenderer(
         parentSuspense,
       )
     }
-    queuePostRenderEffect(() => {
-      instance.isUnmounted = true
-    }, parentSuspense)
+    queuePostRenderEffect(
+      () => {
+        instance.isUnmounted = true
+      },
+      parentSuspense,
+    )
 
     if (__DEV__ || __FEATURE_PROD_DEVTOOLS__) {
       devtoolsComponentRemoved(instance)

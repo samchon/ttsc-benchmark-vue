@@ -544,11 +544,14 @@ export function createHydrationFunctions(
         dirs ||
         needCallTransitionHooks
       ) {
-        queueEffectWithSuspense(() => {
-          vnodeHooks && invokeVNodeHook(vnodeHooks, parentComponent, vnode)
-          needCallTransitionHooks && transition!.enter(el)
-          dirs && invokeDirectiveHook(vnode, null, parentComponent, 'mounted')
-        }, parentSuspense)
+        queueEffectWithSuspense(
+          () => {
+            vnodeHooks && invokeVNodeHook(vnodeHooks, parentComponent, vnode)
+            needCallTransitionHooks && transition!.enter(el)
+            dirs && invokeDirectiveHook(vnode, null, parentComponent, 'mounted')
+          },
+          parentSuspense,
+        )
       }
     }
 
@@ -872,7 +875,10 @@ function propHasMismatch(
     }
   }
 
-  if ((mismatchType !== null && mismatchType !== undefined) && !isMismatchAllowed(el, mismatchType)) {
+  if ((mismatchType !== null && mismatchType !== undefined) && !isMismatchAllowed(
+    el,
+    mismatchType,
+  )) {
     const format = (v: any) =>
       v === false ? `(not rendered)` : `${mismatchKey}="${v}"`
     const preSegment = `Hydration ${MismatchTypeString[mismatchType]} mismatch on`

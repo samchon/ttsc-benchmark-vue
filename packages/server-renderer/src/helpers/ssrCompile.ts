@@ -52,15 +52,12 @@ export function ssrCompile(
     finalCompilerOptions.isCustomElement || NO
   finalCompilerOptions.isNativeTag = finalCompilerOptions.isNativeTag || NO
 
-  const cacheKey = JSON.stringify(
-    {
-      template,
-      compilerOptions: finalCompilerOptions,
-    },
-    (key, value) => {
-      return isFunction(value) ? value.toString() : value
-    },
-  )
+  const cacheKey = JSON.stringify({
+    template,
+    compilerOptions: finalCompilerOptions,
+  }, (key, value) => {
+    return isFunction(value) ? value.toString() : value
+  })
 
   const cached = compileCache[cacheKey]
   if (cached) {

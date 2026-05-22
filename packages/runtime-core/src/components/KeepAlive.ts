@@ -466,9 +466,12 @@ function injectToKeepAliveRoot(
   // injectHook wraps the original for error handling, so make sure to remove
   // the wrapped version.
   const injected = injectHook(type, hook, keepAliveRoot, true /* prepend */)
-  onUnmounted(() => {
-    remove(keepAliveRoot[type]!, injected)
-  }, target)
+  onUnmounted(
+    () => {
+      remove(keepAliveRoot[type]!, injected)
+    },
+    target,
+  )
 }
 
 function resetShapeFlag(vnode: VNode) {

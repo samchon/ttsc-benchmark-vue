@@ -124,15 +124,18 @@ describe('reactivity/collections', () => {
       expect(dummy).toBe(2)
     })
 
-    it('should not be trigger when the value and the old value both are NaN', () => {
-      const map = new WeakMap()
-      const key = {}
-      map.set(key, NaN)
-      const mapSpy = vi.fn(() => map.get(key))
-      effect(mapSpy)
-      map.set(key, NaN)
-      expect(mapSpy).toHaveBeenCalledTimes(1)
-    })
+    it(
+      'should not be trigger when the value and the old value both are NaN',
+      () => {
+        const map = new WeakMap()
+        const key = {}
+        map.set(key, NaN)
+        const mapSpy = vi.fn(() => map.get(key))
+        effect(mapSpy)
+        map.set(key, NaN)
+        expect(mapSpy).toHaveBeenCalledTimes(1)
+      },
+    )
     it('should return proxy from WeakMap.set call', () => {
       const map = reactive(new WeakMap())
       const result = map.set({}, 'a')

@@ -63,9 +63,12 @@ export function setupPuppeteer(args?: string[]): PuppeteerUtils {
       }
     : puppeteerOptions
 
-  beforeAll(async () => {
-    browser = await puppeteer.launch(resolvedOptions)
-  }, 20000)
+  beforeAll(
+    async () => {
+      browser = await puppeteer.launch(resolvedOptions)
+    },
+    20000,
+  )
 
   beforeEach(async () => {
     page = await browser.newPage()
@@ -156,7 +159,8 @@ export function setupPuppeteer(args?: string[]): PuppeteerUtils {
     await page.$eval(
       selector,
       (node, value) => {
-        ;(node as HTMLInputElement).value = value as string
+        ;
+        (node as HTMLInputElement).value = value as string
         node.dispatchEvent(new Event('input'))
       },
       value,
@@ -184,11 +188,14 @@ export function setupPuppeteer(args?: string[]): PuppeteerUtils {
   }
 
   function timeout(time: number) {
-    return page.evaluate(time => {
-      return new Promise(r => {
-        setTimeout(r, time)
-      })
-    }, time)
+    return page.evaluate(
+      time => {
+        return new Promise(r => {
+          setTimeout(r, time)
+        })
+      },
+      time,
+    )
   }
 
   function nextFrame() {

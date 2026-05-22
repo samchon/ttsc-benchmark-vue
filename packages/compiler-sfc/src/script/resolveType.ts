@@ -395,7 +395,6 @@ function mergeElements(
           baseProps[key].key,
           {
             type,
-            // @ts-expect-error
             types: [baseProps[key], props[key]],
           },
           baseProps[key]._ownerScope,

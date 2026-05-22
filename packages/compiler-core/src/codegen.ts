@@ -261,7 +261,7 @@ ${`  `.repeat(n)}`, NewlineType.Start)
     if (name !== null && !_names.has(name)) _names.add(name)
     _mappings.add({
       originalLine: loc.line,
-      originalColumn: loc.column - 1, // source-map column is 0 based
+      originalColumn: loc.column - 1,
       generatedLine: context.line,
       generatedColumn: context.column - 1,
       source: filename,

@@ -560,7 +560,9 @@ export function getTransitionRawChildren(
     const key =
       (parentKey === null || parentKey === undefined)
         ? child.key
-        : String(parentKey) + String((child.key !== null && child.key !== undefined) ? child.key : i)
+        : String(parentKey) + String(
+            (child.key !== null && child.key !== undefined) ? child.key : i,
+          )
     // handle fragment children case, e.g. v-for
     if (child.type === Fragment) {
       if (child.patchFlag & PatchFlags.KEYED_FRAGMENT) keyedFragmentCount++
@@ -570,7 +572,9 @@ export function getTransitionRawChildren(
     }
     // comment placeholders should be skipped, e.g. v-if
     else if (keepComment || child.type !== Comment) {
-      ret.push((key !== null && key !== undefined) ? cloneVNode(child, { key }) : child)
+      ret.push(
+        (key !== null && key !== undefined) ? cloneVNode(child, { key }) : child,
+      )
     }
   }
   // #1126 if a transition children list contains multiple sub fragments, these

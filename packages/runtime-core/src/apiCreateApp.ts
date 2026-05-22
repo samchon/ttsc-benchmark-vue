@@ -259,7 +259,9 @@ export function createAppAPI<HostElement>(
       rootComponent = extend({}, rootComponent)
     }
 
-    if ((rootProps !== null && rootProps !== undefined) && !isObject(rootProps)) {
+    if ((rootProps !== null && rootProps !== undefined) && !isObject(
+      rootProps,
+    )) {
       __DEV__ && warn(`root props passed to app.mount() must be an object.`)
       rootProps = null
     }
