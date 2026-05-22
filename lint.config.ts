@@ -1,25 +1,26 @@
-import type { ITtscLintConfig } from "@ttsc/lint";
+import type { ITtscLintConfig } from '@ttsc/lint'
 
 export default {
-  ignores: ["**/dist/**", "**/temp/**"],
+  files: ['packages/*/src/**/*.ts'],
+  ignores: ['**/dist/**', '**/temp/**'],
   format: {
     printWidth: 80,
     tabWidth: 2,
     useTabs: false,
-    trailingComma: "all",
+    trailingComma: 'all',
   },
   rules: {
-    "no-var": "error",
-    "prefer-const": "error",
-    eqeqeq: "error",
-    "object-shorthand": "error",
-    "no-unneeded-ternary": "error",
-    "prefer-template": "error",
-    "no-useless-rename": "error",
-    "dot-notation": "error",
-    "no-extra-boolean-cast": "error",
-    "no-useless-escape": "error",
-    "prefer-as-const": "error",
-    "prefer-namespace-keyword": "error",
+    'no-var': 'error',
+    'prefer-const': 'error',
+    eqeqeq: 'error',
+    'object-shorthand': 'error',
+    'no-unneeded-ternary': 'error',
+    'prefer-template': 'error',
+    'no-useless-rename': 'error',
+    'dot-notation': 'error',
+    'no-extra-boolean-cast': 'error',
+    'no-useless-escape': 'error',
+    'prefer-as-const': 'error',
+    'prefer-namespace-keyword': 'error',
   },
-} satisfies ITtscLintConfig;
+} satisfies ITtscLintConfig
