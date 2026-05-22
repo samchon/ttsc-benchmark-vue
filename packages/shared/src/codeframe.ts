@@ -47,11 +47,11 @@ export function generateCodeFrame(
             1,
             end > count ? lineLength - pad : end - start,
           )
-          res.push(`   |  ` + ' '.repeat(pad) + '^'.repeat(length))
+          res.push(`   |  ${' '.repeat(pad)}${'^'.repeat(length)}`)
         } else if (j > i) {
           if (end > count) {
             const length = Math.max(Math.min(end - count, lineLength), 1)
-            res.push(`   |  ` + '^'.repeat(length))
+            res.push(`   |  ${'^'.repeat(length)}`)
           }
 
           count += lineLength + newLineSeqLength

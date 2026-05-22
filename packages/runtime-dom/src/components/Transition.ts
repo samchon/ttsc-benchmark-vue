@@ -300,7 +300,7 @@ export function resolveTransitionProps(
 function normalizeDuration(
   duration: TransitionProps['duration'],
 ): [number, number] | null {
-  if (duration == null) {
+  if (duration === null || duration === undefined) {
     return null
   } else if (isObject(duration)) {
     return [NumberOf(duration.enter), NumberOf(duration.leave)]
@@ -358,7 +358,7 @@ function whenTransitionEnds(
     }
   }
 
-  if (explicitTimeout != null) {
+  if (explicitTimeout !== null && explicitTimeout !== undefined) {
     return setTimeout(resolveIfNotStale, explicitTimeout)
   }
 
@@ -367,7 +367,7 @@ function whenTransitionEnds(
     return resolve()
   }
 
-  const endEvent = type + 'end'
+  const endEvent = `${type}end`
   let ended = 0
   const end = () => {
     el.removeEventListener(endEvent, onEnd)

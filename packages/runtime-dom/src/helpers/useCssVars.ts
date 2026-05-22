@@ -87,7 +87,8 @@ function setVarsOnVNode(vnode: VNode, vars: Record<string, unknown>) {
   } else if (vnode.type === Fragment) {
     ;(vnode.children as VNode[]).forEach(c => setVarsOnVNode(c, vars))
   } else if (vnode.type === Static) {
-    let { el, anchor } = vnode
+    const { anchor } = vnode
+    let { el } = vnode
     while (el) {
       setVarsOnNode(el as Node, vars)
       if (el === anchor) break

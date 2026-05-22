@@ -781,7 +781,7 @@ export function createCacheExpression(
     type: NodeTypes.JS_CACHE_EXPRESSION,
     index,
     value,
-    needPauseTracking: needPauseTracking,
+    needPauseTracking,
     inVOnce,
     needArraySpread: false,
     loc: locStub,

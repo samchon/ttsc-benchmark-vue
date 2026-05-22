@@ -227,7 +227,12 @@ function doCompileTemplate({
     inAST = createRoot(template.children, inAST.source)
   }
 
-  let { code, ast, preamble, map } = compiler.compile(inAST || source, {
+  const {
+    code,
+    ast,
+    preamble,
+    map: compiledMap,
+  } = compiler.compile(inAST || source, {
     mode: 'module',
     prefixIdentifiers: true,
     hoistStatic: true,
@@ -250,6 +255,7 @@ function doCompileTemplate({
   // inMap should be the map produced by ./parse.ts which is a simple line-only
   // mapping. If it is present, we need to adjust the final map and errors to
   // reflect the original line numbers.
+  let map = compiledMap
   if (inMap && !inAST) {
     if (map) {
       map = mapLines(inMap, map)
@@ -283,7 +289,7 @@ function mapLines(oldMap: RawSourceMap, newMap: RawSourceMap): RawSourceMap {
   const mergedMapGenerator = new SourceMapGenerator()
 
   newMapConsumer.eachMapping(m => {
-    if (m.originalLine == null) {
+    if (m.originalLine === null || m.originalLine === undefined) {
       return
     }
 
@@ -292,7 +298,10 @@ function mapLines(oldMap: RawSourceMap, newMap: RawSourceMap): RawSourceMap {
       column: m.originalColumn!,
     })
 
-    if (origPosInOldMap.source == null) {
+    if (
+      origPosInOldMap.source === null ||
+      origPosInOldMap.source === undefined
+    ) {
       return
     }
 
@@ -317,7 +326,7 @@ function mapLines(oldMap: RawSourceMap, newMap: RawSourceMap): RawSourceMap {
   ;(oldMapConsumer as any).sources.forEach((sourceFile: string) => {
     generator._sources.add(sourceFile)
     const sourceContent = oldMapConsumer.sourceContentFor(sourceFile)
-    if (sourceContent != null) {
+    if (sourceContent !== null && sourceContent !== undefined) {
       mergedMapGenerator.setSourceContent(sourceFile, sourceContent)
     }
   })

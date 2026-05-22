@@ -388,7 +388,7 @@ function buildDynamicSlot(
     createObjectProperty(`name`, name),
     createObjectProperty(`fn`, fn),
   ]
-  if (index != null) {
+  if (index !== null && index !== undefined) {
     props.push(
       createObjectProperty(`key`, createSimpleExpression(String(index), true)),
     )

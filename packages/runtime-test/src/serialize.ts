@@ -40,7 +40,7 @@ function serializeElement(
   const props = Object.keys(node.props)
     .map(key => {
       const value = node.props[key]
-      return isOn(key) || value == null
+      return isOn(key) || value === null || value === undefined
         ? ``
         : value === ``
           ? key

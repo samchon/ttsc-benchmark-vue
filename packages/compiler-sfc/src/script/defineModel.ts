@@ -109,10 +109,9 @@ export function processDefineModel(
   ctx.s.appendLeft(
     ctx.startOffset! +
       (node.arguments.length ? node.arguments[0].start! : node.end! - 1),
-    `__props, ` +
-      (hasName
-        ? ``
-        : `${JSON.stringify(modelName)}${optionsRemoved ? `` : `, `}`),
+    `__props, ${
+      hasName ? `` : `${JSON.stringify(modelName)}${optionsRemoved ? `` : `, `}`
+    }`,
   )
 
   return true
@@ -144,9 +143,9 @@ export function genModelProps(ctx: ScriptCompileContext): string | undefined {
       }
 
       if (!isProd) {
-        codegenOptions =
-          `type: ${toRuntimeTypeString(runtimeTypes)}` +
-          (skipCheck ? ', skipCheck: true' : '')
+        codegenOptions = `type: ${toRuntimeTypeString(runtimeTypes)}${
+          skipCheck ? ', skipCheck: true' : ''
+        }`
       } else if (hasBoolean || (runtimeOptions && hasFunction)) {
         // preserve types if contains boolean, or
         // function w/ runtime options that may contain default

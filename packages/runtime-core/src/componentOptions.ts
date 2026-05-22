@@ -771,7 +771,7 @@ export function applyOptions(instance: ComponentInternalInstance): void {
   if (render && instance.render === NOOP) {
     instance.render = render as InternalRenderFunction
   }
-  if (inheritAttrs != null) {
+  if (inheritAttrs !== null && inheritAttrs !== undefined) {
     instance.inheritAttrs = inheritAttrs
   }
 

@@ -16,7 +16,7 @@ export function patchClass(
       value ? [value, ...transitionClasses] : [...transitionClasses]
     ).join(' ')
   }
-  if (value == null) {
+  if (value === null || value === undefined) {
     el.removeAttribute('class')
   } else if (isSVG) {
     el.setAttribute('class', value)

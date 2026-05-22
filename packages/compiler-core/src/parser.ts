@@ -265,14 +265,14 @@ const tokenizer = new Tokenizer(stack, {
   ondirmodifier(start, end) {
     const mod = getSlice(start, end)
     if (inVPre && !isVPre(currentProp!)) {
-      ;(currentProp as AttributeNode).name += '.' + mod
+      ;(currentProp as AttributeNode).name += `.${mod}`
       setLocEnd((currentProp as AttributeNode).nameLoc, end)
     } else if ((currentProp as DirectiveNode).name === 'slot') {
       // slot has no modifiers, special case for edge cases like
       // https://github.com/vuejs/language-tools/issues/2710
       const arg = (currentProp as DirectiveNode).arg
       if (arg) {
-        ;(arg as SimpleExpressionNode).content += '.' + mod
+        ;(arg as SimpleExpressionNode).content += `.${mod}`
         setLocEnd(arg.loc, end)
       }
     } else {
@@ -490,7 +490,7 @@ const tokenizer = new Tokenizer(stack, {
 
 // This regex doesn't cover the case if key or index aliases have destructuring,
 // but those do not make sense in the first place, so this works in practice.
-const forIteratorRE = /,([^,\}\]]*)(?:,([^,\}\]]*))?$/
+const forIteratorRE = /,([^,}\]]*)(?:,([^,}\]]*))?$/
 const stripParensRE = /^\(|\)$/g
 
 function parseForExpression(
@@ -917,9 +917,9 @@ function getLoc(start: number, end?: number): SourceLocation {
   return {
     start: tokenizer.getPos(start),
     // @ts-expect-error allow late attachment
-    end: end == null ? end : tokenizer.getPos(end),
+    end: end === null || end === undefined ? end : tokenizer.getPos(end),
     // @ts-expect-error allow late attachment
-    source: end == null ? end : getSlice(start, end),
+    source: end === null || end === undefined ? end : getSlice(start, end),
   }
 }
 
@@ -1033,7 +1033,7 @@ export function baseParse(input: string, options?: ParserOptions): RootNode {
   if (options) {
     let key: keyof ParserOptions
     for (key in options) {
-      if (options[key] != null) {
+      if (options[key] !== null && options[key] !== undefined) {
         // @ts-expect-error
         currentOptions[key] = options[key]
       }

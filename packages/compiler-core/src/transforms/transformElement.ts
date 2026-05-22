@@ -91,7 +91,7 @@ export const transformElement: NodeTransform = (node, context) => {
 
     // The goal of the transform is to create a codegenNode implementing the
     // VNodeCall interface.
-    let vnodeTag = isComponent
+    const vnodeTag = isComponent
       ? resolveComponentType(node as ComponentNode, context)
       : `"${tag}"`
 
@@ -309,7 +309,7 @@ export function resolveComponentType(
     // codegen.ts has special check for __self postfix when generating
     // component imports, which will pass additional `maybeSelfReference` flag
     // to `resolveComponent`.
-    context.components.add(tag + `__self`)
+    context.components.add(`${tag}__self`)
     return toValidAssetId(tag, `component`)
   }
 
@@ -885,7 +885,7 @@ export function buildDirectiveArgs(
     // user directive.
     // see if we have directives exposed via <script setup>
     const fromSetup =
-      !__BROWSER__ && resolveSetupReference('v-' + dir.name, context)
+      !__BROWSER__ && resolveSetupReference(`v-${dir.name}`, context)
     if (fromSetup) {
       dirArgs.push(fromSetup)
     } else {
@@ -929,7 +929,7 @@ function stringifyDynamicPropNames(props: string[]): string {
     propsNamesString += JSON.stringify(props[i])
     if (i < l - 1) propsNamesString += ', '
   }
-  return propsNamesString + `]`
+  return `${propsNamesString}]`
 }
 
 function isComponentTag(tag: string) {

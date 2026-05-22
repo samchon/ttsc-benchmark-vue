@@ -297,7 +297,7 @@ export const ssrTransformElement: NodeTransform = (node, context) => {
                           context.helper(SSR_INCLUDE_BOOLEAN_ATTR),
                           [value],
                         ),
-                        createSimpleExpression(' ' + attrName, true),
+                        createSimpleExpression(` ${attrName}`, true),
                         createSimpleExpression('', true),
                         false /* no newline */,
                       ),
@@ -350,8 +350,9 @@ export const ssrTransformElement: NodeTransform = (node, context) => {
             staticClassBinding = JSON.stringify(prop.value.content)
           }
           openTag.push(
-            ` ${prop.name}` +
-              (prop.value ? `="${escapeHtml(prop.value.content)}"` : ``),
+            ` ${prop.name}${
+              prop.value ? `="${escapeHtml(prop.value.content)}"` : ``
+            }`,
           )
         }
       }

@@ -1034,13 +1034,13 @@ function resolveExt(filename: string, fs: FS) {
     if (fs.fileExists(filename)) return filename
   }
   const resolveTs = () =>
-    tryResolve(filename + `.ts`) ||
-    tryResolve(filename + `.tsx`) ||
-    tryResolve(filename + `.d.ts`)
+    tryResolve(`${filename}.ts`) ||
+    tryResolve(`${filename}.tsx`) ||
+    tryResolve(`${filename}.d.ts`)
   const resolveMts = () =>
-    tryResolve(filename + `.mts`) || tryResolve(filename + `.d.mts`)
+    tryResolve(`${filename}.mts`) || tryResolve(`${filename}.d.mts`)
   const resolveCts = () =>
-    tryResolve(filename + `.cts`) || tryResolve(filename + `.d.cts`)
+    tryResolve(`${filename}.cts`) || tryResolve(`${filename}.d.cts`)
 
   return (
     tryResolve(filename) ||
@@ -1470,7 +1470,7 @@ function recordTypes(
             'default',
           )
         } else if (types[stmt.declaration.name]) {
-          exportedTypes['default'] = types[stmt.declaration.name]
+          exportedTypes.default = types[stmt.declaration.name]
         }
       }
     }
@@ -1508,7 +1508,7 @@ function recordType(
         break
       }
       const id = overwriteId || getId(node.id)
-      let existing = types[id]
+      const existing = types[id]
       if (existing) {
         if (node.type === 'TSModuleDeclaration') {
           if (existing.type === 'TSModuleDeclaration') {

@@ -19,14 +19,14 @@ export function patchStyle(el: Element, prev: Style, next: Style): void {
     if (prev) {
       if (!isString(prev)) {
         for (const key in prev) {
-          if (next[key] == null) {
+          if (next[key] === null || next[key] === undefined) {
             setStyle(style, key, '')
           }
         }
       } else {
         for (const prevStyle of prev.split(';')) {
           const key = prevStyle.slice(0, prevStyle.indexOf(':')).trim()
-          if (next[key] == null) {
+          if (next[key] === null || next[key] === undefined) {
             setStyle(style, key, '')
           }
         }
@@ -37,7 +37,7 @@ export function patchStyle(el: Element, prev: Style, next: Style): void {
         hasControlledDisplay = true
       }
       const value = next[key]
-      if (value != null) {
+      if (value !== null && value !== undefined) {
         if (
           !shouldPreserveTextareaResizeStyle(
             el,
@@ -58,7 +58,7 @@ export function patchStyle(el: Element, prev: Style, next: Style): void {
         // #9821
         const cssVarText = (style as any)[CSS_VAR_TEXT]
         if (cssVarText) {
-          ;(next as string) += ';' + cssVarText
+          ;(next as string) += `;${cssVarText}`
         }
         style.cssText = next as string
         hasControlledDisplay = displayRE.test(next)
@@ -89,7 +89,7 @@ function setStyle(
   if (isArray(val)) {
     val.forEach(v => setStyle(style, name, v))
   } else {
-    if (val == null) val = ''
+    if (val === null || val === undefined) val = ''
     if (__DEV__) {
       if (semicolonRE.test(val)) {
         warn(

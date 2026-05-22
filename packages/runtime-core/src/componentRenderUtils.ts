@@ -233,7 +233,7 @@ export function renderComponentRoot(
         root,
         {
           class: cls,
-          style: style,
+          style,
         },
         false,
         true,

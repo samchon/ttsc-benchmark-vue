@@ -109,7 +109,7 @@ export function initCustomFormatter(): void {
       [
         'span',
         {
-          style: keywordStyle.style + ';opacity:0.66',
+          style: `${keywordStyle.style};opacity:0.66`,
         },
         '$ (internal): ',
       ],
@@ -142,7 +142,7 @@ export function initCustomFormatter(): void {
           return [
             'div',
             {},
-            ['span', keywordStyle, key + ': '],
+            ['span', keywordStyle, `${key}: `],
             formatValue(target[key], false),
           ]
         }),

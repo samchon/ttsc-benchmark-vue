@@ -58,7 +58,7 @@ export function genRuntimeEmits(ctx: ScriptCompileContext): string | undefined {
       : ``
   }
   if (ctx.hasDefineModelCall) {
-    let modelEmitsDecl = `[${Object.keys(ctx.modelDecls)
+    const modelEmitsDecl = `[${Object.keys(ctx.modelDecls)
       .map(n => JSON.stringify(`update:${n}`))
       .join(', ')}]`
     emitsDecl = emitsDecl

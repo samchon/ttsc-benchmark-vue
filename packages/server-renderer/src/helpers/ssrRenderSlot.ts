@@ -60,7 +60,7 @@ export function ssrRenderSlotInner(
       slotProps,
       bufferedPush,
       parentComponent,
-      slotScopeId ? ' ' + slotScopeId : '',
+      slotScopeId ? ` ${slotScopeId}` : '',
     )
     if (isArray(ret)) {
       const validSlotContent = ensureValidVNode(ret)

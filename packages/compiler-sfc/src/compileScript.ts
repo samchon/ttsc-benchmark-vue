@@ -925,7 +925,7 @@ export function compileScript(
         returned += `${key}, `
       }
     }
-    returned = returned.replace(/, $/, '') + ` }`
+    returned = `${returned.replace(/, $/, '')} }`
   } else {
     // inline mode
     if (sfc.template && !sfc.template.src) {
@@ -961,16 +961,11 @@ export function compileScript(
         throw new Error(err)
       } else if (err) {
         if (err.loc) {
-          err.message +=
-            `\n\n` +
-            sfc.filename +
-            '\n' +
-            generateCodeFrame(
-              source,
-              err.loc.start.offset,
-              err.loc.end.offset,
-            ) +
-            `\n`
+          err.message += `\n\n${sfc.filename}\n${generateCodeFrame(
+            source,
+            err.loc.start.offset,
+            err.loc.end.offset,
+          )}\n`
         }
         throw err
       }
@@ -1159,7 +1154,7 @@ function walkDeclaration(
         )
       if (id.type === 'Identifier') {
         let bindingType
-        const userReactiveBinding = userImportAliases['reactive']
+        const userReactiveBinding = userImportAliases.reactive
         if (
           (hoistStatic || from === 'script') &&
           (isAllLiteral || (isConst && isStaticNode(init!)))
@@ -1184,12 +1179,12 @@ function walkDeclaration(
             isCallOf(
               init,
               m =>
-                m === userImportAliases['ref'] ||
-                m === userImportAliases['computed'] ||
-                m === userImportAliases['shallowRef'] ||
-                m === userImportAliases['customRef'] ||
-                m === userImportAliases['toRef'] ||
-                m === userImportAliases['useTemplateRef'] ||
+                m === userImportAliases.ref ||
+                m === userImportAliases.computed ||
+                m === userImportAliases.shallowRef ||
+                m === userImportAliases.customRef ||
+                m === userImportAliases.toRef ||
+                m === userImportAliases.useTemplateRef ||
                 m === DEFINE_MODEL,
             )
           ) {
@@ -1381,12 +1376,12 @@ export function mergeSourceMaps(
     ;(consumer as any).sources.forEach((sourceFile: string) => {
       ;(generator as any)._sources.add(sourceFile)
       const sourceContent = consumer.sourceContentFor(sourceFile)
-      if (sourceContent != null) {
+      if (sourceContent !== null && sourceContent !== undefined) {
         generator.setSourceContent(sourceFile, sourceContent)
       }
     })
     consumer.eachMapping(m => {
-      if (m.originalLine == null) return
+      if (m.originalLine === null || m.originalLine === undefined) return
       generator.addMapping({
         generated: {
           line: m.generatedLine + lineOffset,

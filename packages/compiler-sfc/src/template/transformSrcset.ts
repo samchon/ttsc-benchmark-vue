@@ -65,7 +65,7 @@ export const transformSrcset: NodeTransform = (
             const { url } = imageCandidates[i]
             if (isDataUrl(url)) {
               imageCandidates[i + 1].url =
-                url + ',' + imageCandidates[i + 1].url
+                `${url},${imageCandidates[i + 1].url}`
               imageCandidates.splice(i, 1)
             }
           }
@@ -89,7 +89,8 @@ export const transformSrcset: NodeTransform = (
             let needImportTransform = false
 
             imageCandidates.forEach(candidate => {
-              let { url, descriptor } = candidate
+              const { url } = candidate
+              let { descriptor } = candidate
               descriptor = descriptor ? ` ${descriptor}` : ``
               if (url[0] === '.') {
                 candidate.url = (path.posix || path).join(base, url)

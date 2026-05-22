@@ -544,7 +544,11 @@ export function validateCompatConfig(
     }
   }
 
-  if (instance && config[DeprecationTypes.OPTIONS_DATA_MERGE] != null) {
+  if (
+    instance &&
+    config[DeprecationTypes.OPTIONS_DATA_MERGE] !== null &&
+    config[DeprecationTypes.OPTIONS_DATA_MERGE] !== undefined
+  ) {
     warn(
       `Deprecation config "${DeprecationTypes.OPTIONS_DATA_MERGE}" can only be configured globally.`,
     )

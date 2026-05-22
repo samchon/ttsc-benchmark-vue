@@ -130,7 +130,7 @@ function renderComponentSubTree(
   const comp = instance.type as Component
   const { getBuffer, push } = createBuffer()
   if (isFunction(comp)) {
-    let root = renderComponentRoot(instance)
+    const root = renderComponentRoot(instance)
     // #5817 scope ID attrs not falling through if functional component doesn't
     // have props
     if (!(comp as FunctionalComponent).props) {
@@ -248,7 +248,7 @@ export function renderVNode(
     case Fragment:
       if (vnode.slotScopeIds) {
         slotScopeId =
-          (slotScopeId ? slotScopeId + ' ' : '') + vnode.slotScopeIds.join(' ')
+          (slotScopeId ? `${slotScopeId} ` : '') + vnode.slotScopeIds.join(' ')
       }
       push(`<!--[-->`) // open
       renderVNodeChildren(
@@ -296,7 +296,7 @@ function renderElementVNode(
   slotScopeId?: string,
 ) {
   const tag = vnode.type as string
-  let { props, children, shapeFlag, scopeId } = vnode
+  const { props, children, shapeFlag, scopeId } = vnode
   let openTag = `<${tag}`
 
   if (props) {
@@ -320,7 +320,7 @@ function renderElementVNode(
     openTag += ` ${slotScopeId}`
   }
 
-  push(openTag + `>`)
+  push(`${openTag}>`)
   if (!isVoidTag(tag)) {
     let hasChildrenOverride = false
     if (props) {

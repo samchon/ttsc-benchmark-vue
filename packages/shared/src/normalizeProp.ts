@@ -68,13 +68,13 @@ export function normalizeClass(value: unknown): string {
     for (let i = 0; i < value.length; i++) {
       const normalized = normalizeClass(value[i])
       if (normalized) {
-        res += normalized + ' '
+        res += `${normalized} `
       }
     }
   } else if (isObject(value)) {
     for (const name in value) {
       if (value[name]) {
-        res += name + ' '
+        res += `${name} `
       }
     }
   }
@@ -85,7 +85,7 @@ export function normalizeProps(
   props: Record<string, any> | null,
 ): Record<string, any> | null {
   if (!props) return null
-  let { class: klass, style } = props
+  const { class: klass, style } = props
   if (klass && !isString(klass)) {
     props.class = normalizeClass(klass)
   }

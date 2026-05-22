@@ -24,7 +24,7 @@ const scopedPlugin: PluginCreator<string> = (id = '') => {
     AtRule(node) {
       if (keyframesRE.test(node.name) && !node.params.endsWith(`-${shortId}`)) {
         // register keyframes
-        keyframes[node.params] = node.params = node.params + '-' + shortId
+        keyframes[node.params] = node.params = `${node.params}-${shortId}`
       }
     },
     OnceExit(root) {
@@ -325,7 +325,7 @@ function rewriteSelector(
   }
 
   if (shouldInject) {
-    const idToAdd = slotted ? id + '-s' : id
+    const idToAdd = slotted ? `${id}-s` : id
     selector.insertAfter(
       // If node is null it means we need to inject [id] at the start
       // insertAfter can handle `null` here
@@ -415,7 +415,7 @@ function extractAndWrapNodes(parentNode: Rule | AtRule) {
       parentNode.removeChild(node)
     }
     const wrappedRule = new Rule({
-      nodes: nodes,
+      nodes,
       selector: '&',
     })
     parentNode.prepend(wrappedRule)

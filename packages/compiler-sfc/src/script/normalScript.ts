@@ -14,7 +14,7 @@ export function processNormalScript(
   const script = ctx.descriptor.script!
   try {
     let content = script.content
-    let map = script.map
+    const map = script.map
     const scriptAst = ctx.scriptAst!
     const bindings = analyzeScriptBindings(scriptAst.body)
     const { cssVars } = ctx.descriptor

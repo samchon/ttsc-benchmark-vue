@@ -229,13 +229,13 @@ function convertLegacyProps(
 function convertLegacyEventKey(event: string): string {
   // normalize v2 event prefixes
   if (event[0] === '&') {
-    event = event.slice(1) + 'Passive'
+    event = `${event.slice(1)}Passive`
   }
   if (event[0] === '~') {
-    event = event.slice(1) + 'Once'
+    event = `${event.slice(1)}Once`
   }
   if (event[0] === '!') {
-    event = event.slice(1) + 'Capture'
+    event = `${event.slice(1)}Capture`
   }
   return toHandlerKey(event)
 }

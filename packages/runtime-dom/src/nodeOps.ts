@@ -63,7 +63,12 @@ export const nodeOps: Omit<RendererOptions<Node, Element>, 'patchProp'> = {
             ? doc.createElement(tag, { is })
             : doc.createElement(tag)
 
-    if (tag === 'select' && props && props.multiple != null) {
+    if (
+      tag === 'select' &&
+      props &&
+      props.multiple !== null &&
+      props.multiple !== undefined
+    ) {
       ;(el as HTMLSelectElement).setAttribute('multiple', props.multiple)
     }
 

@@ -602,7 +602,7 @@ export default class Tokenizer {
     if (isEndOfTagSection(c)) {
       const tag = this.buffer.slice(this.sectionStart, this.index)
       if (tag !== 'template') {
-        this.enterRCDATA(toCharCodes(`</` + tag), 0)
+        this.enterRCDATA(toCharCodes(`</${tag}`), 0)
       }
       this.handleTagName(c)
     }

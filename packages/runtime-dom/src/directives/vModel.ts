@@ -82,7 +82,7 @@ export const vModelText: ModelDirective<
   },
   // set value on mounted so it's after min/max for type="range"
   mounted(el, { value }) {
-    el.value = value == null ? '' : value
+    el.value = value === null || value === undefined ? '' : value
   },
   beforeUpdate(
     el,
@@ -96,7 +96,7 @@ export const vModelText: ModelDirective<
       (number || el.type === 'number') && !/^0\d/.test(el.value)
         ? looseToNumber(el.value)
         : el.value
-    const newValue = value == null ? '' : value
+    const newValue = value === null || value === undefined ? '' : value
 
     if (elValue === newValue) {
       return

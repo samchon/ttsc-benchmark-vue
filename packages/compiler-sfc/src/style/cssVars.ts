@@ -150,9 +150,10 @@ export const cssVarsPlugin: PluginCreator<CssVarsPluginOptions> = opts => {
           const end = lexBinding(value, start)
           if (end !== null) {
             const variable = normalizeExpression(value.slice(start, end))
-            transformed +=
-              value.slice(lastIndex, match.index) +
-              `var(--${genVarName(id, variable, isProd)})`
+            transformed += `${value.slice(
+              lastIndex,
+              match.index,
+            )}var(--${genVarName(id, variable, isProd)})`
             lastIndex = end + 1
           }
         }

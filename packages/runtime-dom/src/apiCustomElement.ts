@@ -538,7 +538,7 @@ export class VueElement
         if (val === true) {
           this.setAttribute(hyphenate(key), '')
         } else if (typeof val === 'string' || typeof val === 'number') {
-          this.setAttribute(hyphenate(key), val + '')
+          this.setAttribute(hyphenate(key), `${val}`)
         } else if (!val) {
           this.removeAttribute(hyphenate(key))
         }
@@ -709,7 +709,7 @@ export class VueElement
         for (const n of content) {
           // for :slotted css
           if (scopeId && n.nodeType === 1) {
-            const id = scopeId + '-s'
+            const id = `${scopeId}-s`
             const walker = document.createTreeWalker(n, 1)
             ;(n as Element).setAttribute(id, '')
             let child

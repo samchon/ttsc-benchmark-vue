@@ -175,7 +175,7 @@ export const TeleportImpl = {
       queuePostRenderEffect(mountJob, parentSuspense)
     }
 
-    if (n1 == null) {
+    if (n1 === null || n1 === undefined) {
       // insert anchors in the main view
       const placeholder = (n2.el = __DEV__
         ? createComment('teleport start')

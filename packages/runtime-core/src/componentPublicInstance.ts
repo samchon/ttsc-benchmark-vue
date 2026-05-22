@@ -598,7 +598,7 @@ export const PublicInstanceProxyHandlers: ProxyHandler<any> = {
     key: string,
     descriptor: PropertyDescriptor,
   ) {
-    if (descriptor.get != null) {
+    if (descriptor.get !== null && descriptor.get !== undefined) {
       // invalidate key cache of a getter based property #5417
       target._.accessCache![key] = 0
     } else if (hasOwn(descriptor, 'value')) {

@@ -259,7 +259,7 @@ export function createAppAPI<HostElement>(
       rootComponent = extend({}, rootComponent)
     }
 
-    if (rootProps != null && !isObject(rootProps)) {
+    if (rootProps !== null && rootProps !== undefined && !isObject(rootProps)) {
       __DEV__ && warn(`root props passed to app.mount() must be an object.`)
       rootProps = null
     }
@@ -316,8 +316,9 @@ export function createAppAPI<HostElement>(
             context.mixins.push(mixin)
           } else if (__DEV__) {
             warn(
-              'Mixin has already been applied to target app' +
-                (mixin.name ? `: ${mixin.name}` : ''),
+              `Mixin has already been applied to target app${
+                mixin.name ? `: ${mixin.name}` : ''
+              }`,
             )
           }
         } else if (__DEV__) {

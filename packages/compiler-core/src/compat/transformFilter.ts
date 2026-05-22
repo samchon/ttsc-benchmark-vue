@@ -66,11 +66,8 @@ function parseFilter(node: SimpleExpressionNode, context: TransformContext) {
   let square = 0
   let paren = 0
   let lastFilterIndex = 0
-  let c,
-    prev,
-    i: number,
-    expression,
-    filters: string[] = []
+  let c, prev, i: number, expression
+  const filters: string[] = []
 
   for (i = 0; i < exp.length; i++) {
     prev = c
@@ -186,7 +183,7 @@ function wrapFilter(
     const args = filter.slice(i + 1)
     context.filters!.add(name)
     return `${toValidAssetId(name, 'filter')}(${exp}${
-      args !== ')' ? ',' + args : args
+      args !== ')' ? `,${args}` : args
     }`
   }
 }

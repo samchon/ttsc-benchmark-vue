@@ -207,7 +207,7 @@ export function defineAsyncComponent<
         }, delay)
       }
 
-      if (timeout != null) {
+      if (timeout !== null && timeout !== undefined) {
         setTimeout(() => {
           if (!loaded.value && !error.value) {
             const err = new Error(

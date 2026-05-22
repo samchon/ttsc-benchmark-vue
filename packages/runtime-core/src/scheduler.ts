@@ -209,7 +209,11 @@ export function flushPostFlushCbs(seen?: CountMap): void {
 }
 
 const getId = (job: SchedulerJob): number =>
-  job.id == null ? (job.flags! & SchedulerJobFlags.PRE ? -1 : Infinity) : job.id
+  job.id === null || job.id === undefined
+    ? job.flags! & SchedulerJobFlags.PRE
+      ? -1
+      : Infinity
+    : job.id
 
 function flushJobs(seen?: CountMap) {
   if (__DEV__) {

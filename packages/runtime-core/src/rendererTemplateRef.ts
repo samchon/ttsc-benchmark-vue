@@ -118,7 +118,7 @@ export function setRef(
   }
 
   // dynamic ref changed. unset old ref
-  if (oldRef != null && oldRef !== ref) {
+  if (oldRef !== null && oldRef !== undefined && oldRef !== ref) {
     invalidatePendingSetRef(oldRawRef!)
     if (isString(oldRef)) {
       refs[oldRef] = null

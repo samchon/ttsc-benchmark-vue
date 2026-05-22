@@ -56,7 +56,7 @@ export function unrollBuffer(buffer: SSRBuffer): Promise<string> | string {
 function unrollBufferSync(buffer: SSRBuffer): string {
   let ret = ''
   for (let i = 0; i < buffer.length; i++) {
-    let item = buffer[i]
+    const item = buffer[i]
     if (isString(item)) {
       ret += item
     } else {

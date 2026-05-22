@@ -22,7 +22,7 @@ export function withMemo(
 
 export function isMemoSame(cached: VNode, memo: any[]): boolean {
   const prev: any[] = cached.memo!
-  if (prev.length != memo.length) {
+  if (prev.length !== memo.length) {
     return false
   }
 

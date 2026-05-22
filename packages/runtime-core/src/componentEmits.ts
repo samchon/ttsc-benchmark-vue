@@ -210,7 +210,7 @@ export function emit(
     )
   }
 
-  const onceHandler = props[handlerName + `Once`]
+  const onceHandler = props[`${handlerName}Once`]
   if (onceHandler) {
     if (!instance.emitted) {
       instance.emitted = {}
@@ -246,7 +246,7 @@ export function normalizeEmitsOptions(
   }
 
   const raw = comp.emits
-  let normalized: ObjectEmitsOptions = {}
+  const normalized: ObjectEmitsOptions = {}
 
   // apply mixin/extends props
   let hasExtends = false
