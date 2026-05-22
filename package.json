@@ -70,6 +70,8 @@
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-replace": "5.0.4",
     "@swc/core": "^1.15.33",
+    "@ttsc/lint": "file:/tmp/ttsc-tgz/ttsc-lint-0.12.4.tgz",
+    "@ttsc/linux-x64": "file:/tmp/ttsc-tgz/ttsc-linux-x64-0.12.4.tgz",
     "@types/hash-sum": "^1.0.2",
     "@types/node": "^24.12.2",
     "@types/semver": "^7.7.1",
