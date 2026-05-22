@@ -285,11 +285,7 @@ export function compileScript(
       const binding = setupBindings[id.name]
       if (binding && binding !== BindingTypes.LITERAL_CONST) {
         ctx.error(
-          `\`${method}()\` in <script setup> cannot reference locally ` +
-            `declared variables because it will be hoisted outside of the ` +
-            `setup() function. If your component options require initialization ` +
-            `in the module scope, use a separate normal <script> to export ` +
-            `the options instead.`,
+          `\`${method}()\` in <script setup> cannot reference locally declared variables because it will be hoisted outside of the setup() function. If your component options require initialization in the module scope, use a separate normal <script> to export the options instead.`,
           id,
         )
       }
@@ -357,8 +353,7 @@ export function compileScript(
             )
           } else {
             ctx.error(
-              `\`${imported}\` is a compiler macro and cannot be aliased to ` +
-                `a different name.`,
+              `\`${imported}\` is a compiler macro and cannot be aliased to a different name.`,
               specifier,
             )
           }
@@ -801,8 +796,7 @@ export function compileScript(
                 setupBindings[id] = BindingTypes.SETUP_LET
                 ctx.bindingMetadata[id] = BindingTypes.SETUP_LET
                 warnOnce(
-                  `\`v-model\` cannot update a \`const\` reactive binding \`${id}\`. ` +
-                    `The compiler has transformed it to \`let\` to make the update work.`,
+                  `\`v-model\` cannot update a \`const\` reactive binding \`${id}\`. The compiler has transformed it to \`let\` to make the update work.`,
                 )
               }
             }
@@ -925,7 +919,7 @@ export function compileScript(
         returned += `${key}, `
       }
     }
-    returned = returned.replace(/, $/, '') + ` }`
+    returned = `${returned.replace(/, $/, '')} }`
   } else {
     // inline mode
     if (sfc.template && !sfc.template.src) {
@@ -962,15 +956,15 @@ export function compileScript(
       } else if (err) {
         if (err.loc) {
           err.message +=
-            `\n\n` +
-            sfc.filename +
-            '\n' +
-            generateCodeFrame(
+            `
+
+${sfc.filename}
+${generateCodeFrame(
               source,
               err.loc.start.offset,
               err.loc.end.offset,
-            ) +
-            `\n`
+            )}
+`
         }
         throw err
       }
@@ -994,10 +988,11 @@ export function compileScript(
     // componentPublicInstance proxy to allow properties that start with $ or _
     ctx.s.appendRight(
       endOffset,
-      `\nconst __returned__ = ${returned}\n` +
-        `Object.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })\n` +
-        `return __returned__` +
-        `\n}\n\n`,
+      `\nconst __returned__ = ${returned}\nObject.defineProperty(__returned__, '__isScriptSetup', { enumerable: false, value: true })
+return __returned__
+}
+
+`,
     )
   } else {
     ctx.s.appendRight(endOffset, `\nreturn ${returned}\n}\n\n`)
@@ -1159,7 +1154,7 @@ function walkDeclaration(
         )
       if (id.type === 'Identifier') {
         let bindingType
-        const userReactiveBinding = userImportAliases['reactive']
+        const userReactiveBinding = userImportAliases.reactive
         if (
           (hoistStatic || from === 'script') &&
           (isAllLiteral || (isConst && isStaticNode(init!)))
@@ -1184,12 +1179,12 @@ function walkDeclaration(
             isCallOf(
               init,
               m =>
-                m === userImportAliases['ref'] ||
-                m === userImportAliases['computed'] ||
-                m === userImportAliases['shallowRef'] ||
-                m === userImportAliases['customRef'] ||
-                m === userImportAliases['toRef'] ||
-                m === userImportAliases['useTemplateRef'] ||
+                m === userImportAliases.ref ||
+                m === userImportAliases.computed ||
+                m === userImportAliases.shallowRef ||
+                m === userImportAliases.customRef ||
+                m === userImportAliases.toRef ||
+                m === userImportAliases.useTemplateRef ||
                 m === DEFINE_MODEL,
             )
           ) {
@@ -1381,12 +1376,12 @@ export function mergeSourceMaps(
     ;(consumer as any).sources.forEach((sourceFile: string) => {
       ;(generator as any)._sources.add(sourceFile)
       const sourceContent = consumer.sourceContentFor(sourceFile)
-      if (sourceContent != null) {
+      if ((sourceContent !== null && sourceContent !== undefined)) {
         generator.setSourceContent(sourceFile, sourceContent)
       }
     })
     consumer.eachMapping(m => {
-      if (m.originalLine == null) return
+      if ((m.originalLine === null || m.originalLine === undefined)) return
       generator.addMapping({
         generated: {
           line: m.generatedLine + lineOffset,

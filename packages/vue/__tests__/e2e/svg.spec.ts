@@ -26,7 +26,7 @@ describe('e2e: svg', () => {
           const points = globalStats
             .map((stat, i) => {
               const point = valueToPoint(stat.value, i, total)
-              return point.x + ',' + point.y
+              return `${point.x},${point.y}`
             })
             .join(' ')
           return (

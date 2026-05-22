@@ -243,7 +243,7 @@ const KeepAliveImpl: ComponentOptions = {
     let pendingCacheKey: CacheKey | null = null
     const cacheSubtree = () => {
       // fix #1621, the pendingCacheKey could be 0
-      if (pendingCacheKey != null) {
+      if ((pendingCacheKey !== null && pendingCacheKey !== undefined)) {
         // if KeepAlive child is a Suspense, it needs to be cached after Suspense resolves
         // avoid caching vnode that not been mounted
         if (isSuspense(instance.subTree.type)) {
@@ -327,7 +327,7 @@ const KeepAliveImpl: ComponentOptions = {
         return rawVNode
       }
 
-      const key = vnode.key == null ? comp : vnode.key
+      const key = (vnode.key === null || vnode.key === undefined) ? comp : vnode.key
       const cachedVNode = cache.get(key)
 
       // clone vnode if it's reused because we are going to mutate it

@@ -15,7 +15,7 @@ import * as runtimeTest from '@vue/runtime-test'
 import { createApp, registerRuntimeCompiler } from '@vue/runtime-test'
 import { baseCompile } from '@vue/compiler-core'
 
-declare var __VUE_HMR_RUNTIME__: HMRRuntime
+declare let __VUE_HMR_RUNTIME__: HMRRuntime
 const { createRecord, rerender, reload } = __VUE_HMR_RUNTIME__
 
 registerRuntimeCompiler(compileToFunction)

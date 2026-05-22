@@ -10,7 +10,7 @@ import {
 describe('reactivity/collections', () => {
   function coverCollectionFn(collection: Set<any>, fnName: string) {
     const spy = vi.fn()
-    let proxy = reactive(collection)
+    const proxy = reactive(collection)
     ;(collection as any)[fnName] = spy
     return [proxy as any, spy]
   }
@@ -54,7 +54,7 @@ describe('reactivity/collections', () => {
       const set = reactive(new Set() as Set<number>)
       effect(() => {
         dummy = 0
-        for (let num of set) {
+        for (const num of set) {
           dummy += num
         }
       })
@@ -92,7 +92,7 @@ describe('reactivity/collections', () => {
       const set = reactive(new Set() as Set<number>)
       effect(() => {
         dummy = 0
-        for (let num of set.values()) {
+        for (const num of set.values()) {
           dummy += num
         }
       })
@@ -112,7 +112,7 @@ describe('reactivity/collections', () => {
       const set = reactive(new Set() as Set<number>)
       effect(() => {
         dummy = 0
-        for (let num of set.keys()) {
+        for (const num of set.keys()) {
           dummy += num
         }
       })
@@ -228,16 +228,16 @@ describe('reactivity/collections', () => {
         for (let [num] of toRaw(set).entries()) {
           dummy += num
         }
-        for (let num of toRaw(set).keys()) {
+        for (const num of toRaw(set).keys()) {
           dummy += num
         }
-        for (let num of toRaw(set).values()) {
+        for (const num of toRaw(set).values()) {
           dummy += num
         }
         toRaw(set).forEach(num => {
           dummy += num
         })
-        for (let num of toRaw(set)) {
+        for (const num of toRaw(set)) {
           dummy += num
         }
       })

@@ -109,10 +109,9 @@ export function processDefineModel(
   ctx.s.appendLeft(
     ctx.startOffset! +
       (node.arguments.length ? node.arguments[0].start! : node.end! - 1),
-    `__props, ` +
-      (hasName
+    `__props, ${(hasName
         ? ``
-        : `${JSON.stringify(modelName)}${optionsRemoved ? `` : `, `}`),
+        : `${JSON.stringify(modelName)}${optionsRemoved ? `` : `, `}`)}`,
   )
 
   return true

@@ -1409,7 +1409,7 @@ describe('renderer: optimized mode', () => {
     const foo: any = []
     function updateFoo() {
       for (let n = 0; n < 3; n++) {
-        foo[n] = n + 1 + '_foo'
+        foo[n] = `${n}${1}_foo`
       }
     }
     const Comp = {

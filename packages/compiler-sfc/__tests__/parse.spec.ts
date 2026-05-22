@@ -13,8 +13,7 @@ describe('compiler:sfc', () => {
       // Padding determines how many blank lines will there be before the style block
       const padding = Math.round(Math.random() * 10)
       const src =
-        `${'\n'.repeat(padding)}` +
-        `<style>
+        `${'\n'.repeat(padding)}<style>
 .css {
 color: red;
 }
@@ -143,42 +142,59 @@ h1 { color: red }
 
     const padTrue = parse(content.trim(), { pad: true }).descriptor
     expect(padTrue.script!.content).toBe(
-      Array(3 + 1).join('//\n') + '\nexport default {}\n',
+      `${Array(3 + 1).join('//\n')}
+export default {}
+`,
     )
     expect(padTrue.styles[0].content).toBe(
-      Array(6 + 1).join('\n') + '\nh1 { color: red }\n',
+      `${Array(6 + 1).join('\n')}
+h1 { color: red }
+`,
     )
     expect(padTrue.customBlocks[0].content).toBe(
-      Array(9 + 1).join('\n') + '\n{ "greeting": "hello" }\n',
+      `${Array(9 + 1).join('\n')}
+{ "greeting": "hello" }
+`,
     )
 
     const padLine = parse(content.trim(), { pad: 'line' }).descriptor
     expect(padLine.script!.content).toBe(
-      Array(3 + 1).join('//\n') + '\nexport default {}\n',
+      `${Array(3 + 1).join('//\n')}
+export default {}
+`,
     )
     expect(padLine.styles[0].content).toBe(
-      Array(6 + 1).join('\n') + '\nh1 { color: red }\n',
+      `${Array(6 + 1).join('\n')}
+h1 { color: red }
+`,
     )
     expect(padLine.customBlocks[0].content).toBe(
-      Array(9 + 1).join('\n') + '\n{ "greeting": "hello" }\n',
+      `${Array(9 + 1).join('\n')}
+{ "greeting": "hello" }
+`,
     )
 
     const padSpace = parse(content.trim(), { pad: 'space' }).descriptor
     expect(padSpace.script!.content).toBe(
-      `<template>\n<div></div>\n</template>\n<script>`.replace(/./g, ' ') +
-        '\nexport default {}\n',
+      `${`<template>\n<div></div>\n</template>\n<script>`.replace(/./g, ' ')}
+export default {}
+`,
     )
     expect(padSpace.styles[0].content).toBe(
-      `<template>\n<div></div>\n</template>\n<script>\nexport default {}\n</script>\n<style>`.replace(
+      `${`<template>\n<div></div>\n</template>\n<script>\nexport default {}\n</script>\n<style>`.replace(
         /./g,
         ' ',
-      ) + '\nh1 { color: red }\n',
+      )}
+h1 { color: red }
+`,
     )
     expect(padSpace.customBlocks[0].content).toBe(
-      `<template>\n<div></div>\n</template>\n<script>\nexport default {}\n</script>\n<style>\nh1 { color: red }\n</style>\n<i18n>`.replace(
+      `${`<template>\n<div></div>\n</template>\n<script>\nexport default {}\n</script>\n<style>\nh1 { color: red }\n</style>\n<i18n>`.replace(
         /./g,
         ' ',
-      ) + '\n{ "greeting": "hello" }\n',
+      )}
+{ "greeting": "hello" }
+`,
     )
   })
 
@@ -232,7 +248,7 @@ h1 { color: red }
     const { descriptor } = parse(`<script src="com"/>`)
     expect(descriptor.script).toBeTruthy()
     expect(descriptor.script!.content).toBeFalsy()
-    expect(descriptor.script!.attrs['src']).toBe('com')
+    expect(descriptor.script!.attrs.src).toBe('com')
   })
 
   test('should not expose ast on template node if has src import', () => {
@@ -282,7 +298,7 @@ h1 { color: red }
   test('template with preprocessor lang should be treated as plain text', () => {
     const content = `p(v-if="1 < 2") test <div/>`
     const { descriptor, errors } = parse(
-      `<template lang="pug">` + content + `</template>`,
+      `<template lang="pug">${content}</template>`,
     )
     expect(errors.length).toBe(0)
     expect(descriptor.template!.content).toBe(content)

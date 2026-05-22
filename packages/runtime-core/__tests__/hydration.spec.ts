@@ -37,7 +37,7 @@ import { type SSRContext, renderToString } from '@vue/server-renderer'
 import { PatchFlags, normalizeStyle } from '@vue/shared'
 import { vShowOriginalDisplay } from '../../runtime-dom/src/directives/vShow'
 
-declare var __VUE_HMR_RUNTIME__: HMRRuntime
+declare let __VUE_HMR_RUNTIME__: HMRRuntime
 const { createRecord, reload } = __VUE_HMR_RUNTIME__
 
 function mountWithHydration(html: string, render: () => any) {
@@ -106,7 +106,7 @@ describe('SSR hydration', () => {
 
   test('static (multiple elements)', () => {
     const staticContent = '<div></div><span>hello</span>'
-    const html = `<div><div>hi</div>` + staticContent + `<div>ho</div></div>`
+    const html = `<div><div>hi</div>${staticContent}<div>ho</div></div>`
 
     const n1 = h('div', 'hi')
     const s = createStaticVNode('', 2)
@@ -321,8 +321,8 @@ describe('SSR hydration', () => {
         h('span', { class: msg.value, onClick: fn1 }),
       ]),
       h(Teleport, { to: '#teleport2' }, [
-        h('span', msg.value + '2'),
-        h('span', { class: msg.value + '2', onClick: fn2 }),
+        h('span', `${msg.value}2`),
+        h('span', { class: `${msg.value}2`, onClick: fn2 }),
       ]),
     ]
 
@@ -390,7 +390,7 @@ describe('SSR hydration', () => {
         h('span', msg.value),
         h('span', { class: msg.value, onClick: fn1 }),
       ]),
-      h('div', { class: msg.value + '2', onClick: fn2 }, 'bar'),
+      h('div', { class: `${msg.value}2`, onClick: fn2 }, 'bar'),
     ]
 
     const teleportContainer = document.createElement('div')

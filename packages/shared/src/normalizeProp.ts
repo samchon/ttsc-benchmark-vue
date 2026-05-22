@@ -68,13 +68,13 @@ export function normalizeClass(value: unknown): string {
     for (let i = 0; i < value.length; i++) {
       const normalized = normalizeClass(value[i])
       if (normalized) {
-        res += normalized + ' '
+        res += `${normalized} `
       }
     }
   } else if (isObject(value)) {
     for (const name in value) {
       if (value[name]) {
-        res += name + ' '
+        res += `${name} `
       }
     }
   }

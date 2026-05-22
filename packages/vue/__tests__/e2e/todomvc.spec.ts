@@ -18,10 +18,10 @@ describe('e2e: todomvc', () => {
   } = setupPuppeteer()
 
   async function removeItemAt(n: number) {
-    const item = (await page().$('.todo:nth-child(' + n + ')'))!
+    const item = (await page().$(`.todo:nth-child(${n})`))!
     const itemBBox = (await item.boundingBox())!
     await page().mouse.move(itemBBox.x + 10, itemBBox.y + 10)
-    await click('.todo:nth-child(' + n + ') .destroy')
+    await click(`.todo:nth-child(${n}) .destroy`)
   }
 
   async function testTodomvc(apiType: 'classic' | 'composition') {

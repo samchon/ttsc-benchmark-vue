@@ -36,7 +36,7 @@ describe('reactivity/reactive', () => {
     expect(isReactive(reactiveObj)).toBe(true)
     // read prop of reactiveObject will cause reactiveObj[prop] to be reactive
     // @ts-expect-error
-    const prototype = reactiveObj['__proto__']
+    const prototype = reactiveObj.__proto__
     const otherObj = { data: ['a'] }
     expect(isReactive(otherObj)).toBe(false)
     const reactiveOther = reactive(otherObj)
@@ -422,8 +422,8 @@ describe('reactivity/reactive', () => {
 
   // #11979
   test('should release property Dep instance if it no longer has subscribers', () => {
-    let obj = { x: 1 }
-    let a = reactive(obj)
+    const obj = { x: 1 }
+    const a = reactive(obj)
     const e = effect(() => a.x)
     expect(targetMap.get(obj)?.get('x')).toBeTruthy()
     e.effect.stop()

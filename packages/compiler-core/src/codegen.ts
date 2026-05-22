@@ -204,8 +204,7 @@ function createCodegenContext(
             // no newlines; fast path to avoid newline detection
             if (__TEST__ && code.includes('\n')) {
               throw new Error(
-                `CodegenContext.push() called newlineIndex: none, but contains` +
-                  `newlines: ${code.replace(/\n/g, '\\n')}`,
+                `CodegenContext.push() called newlineIndex: none, but containsnewlines: ${code.replace(/\n/g, '\\n')}`,
               )
             }
             context.column += code.length
@@ -250,7 +249,8 @@ function createCodegenContext(
   }
 
   function newline(n: number) {
-    context.push('\n' + `  `.repeat(n), NewlineType.Start)
+    context.push(`
+${`  `.repeat(n)}`, NewlineType.Start)
   }
 
   function addMapping(loc: Position, name: string | null = null) {
@@ -302,7 +302,7 @@ export function generate(
   const helpers = Array.from(ast.helpers)
   const hasHelpers = helpers.length > 0
   const useWithBlock = !prefixIdentifiers && mode !== 'module'
-  const genScopeId = !__BROWSER__ && scopeId != null && mode === 'module'
+  const genScopeId = !__BROWSER__ && (scopeId !== null && scopeId !== undefined) && mode === 'module'
   const isSetupInlined = !__BROWSER__ && !!options.inline
 
   // preambles
@@ -662,7 +662,7 @@ function genNode(node: CodegenNode | symbol | string, context: CodegenContext) {
     case NodeTypes.FOR:
       __DEV__ &&
         assert(
-          node.codegenNode != null,
+          (node.codegenNode !== null && node.codegenNode !== undefined),
           `Codegen node is missing for element/if/for node. ` +
             `Apply appropriate transforms first.`,
         )
@@ -850,7 +850,7 @@ function genVNodeCall(node: VNodeCall, context: CodegenContext) {
   }
 
   if (directives) {
-    push(helper(WITH_DIRECTIVES) + `(`)
+    push(`${helper(WITH_DIRECTIVES)}(`)
   }
   if (isBlock) {
     push(`(${helper(OPEN_BLOCK)}(${disableTracking ? `true` : ``}), `)
@@ -861,7 +861,7 @@ function genVNodeCall(node: VNodeCall, context: CodegenContext) {
   const callHelper: symbol = isBlock
     ? getVNodeBlockHelper(context.inSSR, isComponent)
     : getVNodeHelper(context.inSSR, isComponent)
-  push(helper(callHelper) + `(`, NewlineType.None, node)
+  push(`${helper(callHelper)}(`, NewlineType.None, node)
   genNodeList(
     genNullableArgs([tag, props, children, patchFlagString, dynamicProps]),
     context,
@@ -880,7 +880,7 @@ function genVNodeCall(node: VNodeCall, context: CodegenContext) {
 function genNullableArgs(args: any[]): CallExpression['arguments'] {
   let i = args.length
   while (i--) {
-    if (args[i] != null) break
+    if ((args[i] !== null && args[i] !== undefined)) break
   }
   return args.slice(0, i + 1).map(arg => arg || `null`)
 }
@@ -892,7 +892,7 @@ function genCallExpression(node: CallExpression, context: CodegenContext) {
   if (pure) {
     push(PURE_ANNOTATION)
   }
-  push(callee + `(`, NewlineType.None, node)
+  push(`${callee}(`, NewlineType.None, node)
   genNodeList(node.arguments, context)
   push(`)`)
 }

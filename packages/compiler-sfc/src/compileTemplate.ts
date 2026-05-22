@@ -283,7 +283,7 @@ function mapLines(oldMap: RawSourceMap, newMap: RawSourceMap): RawSourceMap {
   const mergedMapGenerator = new SourceMapGenerator()
 
   newMapConsumer.eachMapping(m => {
-    if (m.originalLine == null) {
+    if ((m.originalLine === null || m.originalLine === undefined)) {
       return
     }
 
@@ -292,7 +292,7 @@ function mapLines(oldMap: RawSourceMap, newMap: RawSourceMap): RawSourceMap {
       column: m.originalColumn!,
     })
 
-    if (origPosInOldMap.source == null) {
+    if ((origPosInOldMap.source === null || origPosInOldMap.source === undefined)) {
       return
     }
 
@@ -317,7 +317,7 @@ function mapLines(oldMap: RawSourceMap, newMap: RawSourceMap): RawSourceMap {
   ;(oldMapConsumer as any).sources.forEach((sourceFile: string) => {
     generator._sources.add(sourceFile)
     const sourceContent = oldMapConsumer.sourceContentFor(sourceFile)
-    if (sourceContent != null) {
+    if ((sourceContent !== null && sourceContent !== undefined)) {
       mergedMapGenerator.setSourceContent(sourceFile, sourceContent)
     }
   })

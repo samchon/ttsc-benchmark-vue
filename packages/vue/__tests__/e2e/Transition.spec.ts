@@ -3442,8 +3442,7 @@ describe('e2e: Transition', () => {
           `,
         }).mount(document.createElement('div'))
         expect(
-          `[Vue warn]: <transition> explicit duration is not a valid number - ` +
-            `got ${JSON.stringify({})}`,
+          `[Vue warn]: <transition> explicit duration is not a valid number - got ${JSON.stringify({})}`,
         ).toHaveBeenWarned()
       },
       E2E_TIMEOUT,

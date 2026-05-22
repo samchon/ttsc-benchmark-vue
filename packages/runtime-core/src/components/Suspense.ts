@@ -87,7 +87,7 @@ export const SuspenseImpl = {
     // platform-specific impl passed from renderer
     rendererInternals: RendererInternals,
   ): void {
-    if (n1 == null) {
+    if ((n1 === null || n1 === undefined)) {
       mountSuspense(
         n2,
         container,
@@ -936,5 +936,5 @@ function setActiveBranch(suspense: SuspenseBoundary, branch: VNode) {
 
 function isVNodeSuspensible(vnode: VNode) {
   const suspensible = vnode.props && vnode.props.suspensible
-  return suspensible != null && suspensible !== false
+  return (suspensible !== null && suspensible !== undefined) && suspensible !== false
 }

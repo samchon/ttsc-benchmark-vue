@@ -297,7 +297,7 @@ export const ssrTransformElement: NodeTransform = (node, context) => {
                           context.helper(SSR_INCLUDE_BOOLEAN_ATTR),
                           [value],
                         ),
-                        createSimpleExpression(' ' + attrName, true),
+                        createSimpleExpression(` ${attrName}`, true),
                         createSimpleExpression('', true),
                         false /* no newline */,
                       ),

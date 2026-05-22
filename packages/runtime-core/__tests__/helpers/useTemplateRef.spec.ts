@@ -210,13 +210,13 @@ describe('useTemplateRef', () => {
     const root = nodeOps.createElement('div')
     render(h(Comp), root)
 
-    expect(tRefs!['foo'].value).toBe(root.children[0])
-    expect(tRefs!['bar'].value).toBeNull()
+    expect(tRefs!.foo.value).toBe(root.children[0])
+    expect(tRefs!.bar.value).toBeNull()
 
     refKey.value = 'bar'
     await nextTick()
-    expect(tRefs!['foo'].value).toBeNull()
-    expect(tRefs!['bar'].value).toBe(root.children[0])
+    expect(tRefs!.foo.value).toBeNull()
+    expect(tRefs!.bar.value).toBe(root.children[0])
 
     expect('target is readonly').not.toHaveBeenWarned()
   })

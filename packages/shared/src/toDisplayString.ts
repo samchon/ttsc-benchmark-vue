@@ -24,7 +24,7 @@ const isRef = (val: any): val is { value: unknown } => {
 export const toDisplayString = (val: unknown): string => {
   return isString(val)
     ? val
-    : val == null
+    : (val === null || val === undefined)
       ? ''
       : isArray(val) ||
           (isObject(val) &&
@@ -42,7 +42,7 @@ const replacer = (_key: string, val: unknown): any => {
     return {
       [`Map(${val.size})`]: [...val.entries()].reduce(
         (entries, [key, val], i) => {
-          entries[stringifySymbol(key, i) + ' =>'] = val
+          entries[`${stringifySymbol(key, i)} =>`] = val
           return entries
         },
         {} as Record<string, any>,

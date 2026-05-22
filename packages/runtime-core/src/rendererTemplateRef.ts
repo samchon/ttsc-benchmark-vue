@@ -89,8 +89,7 @@ export function setRef(
           if (__DEV__) {
             if (hasOwn(rawSetupState, key) && !isRef(rawSetupState[key])) {
               warn(
-                `Template ref "${key}" used on a non-ref value. ` +
-                  `It will not work in the production build.`,
+                `Template ref "${key}" used on a non-ref value. It will not work in the production build.`,
               )
             }
 
@@ -118,7 +117,7 @@ export function setRef(
   }
 
   // dynamic ref changed. unset old ref
-  if (oldRef != null && oldRef !== ref) {
+  if ((oldRef !== null && oldRef !== undefined) && oldRef !== ref) {
     invalidatePendingSetRef(oldRawRef!)
     if (isString(oldRef)) {
       refs[oldRef] = null

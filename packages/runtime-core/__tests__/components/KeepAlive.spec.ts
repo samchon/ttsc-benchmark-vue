@@ -887,7 +887,7 @@ describe('KeepAlive', () => {
         const Component = inject<Ref<ComponentPublicInstance>>('component')
         const refView = ref()
 
-        let componentProps = {
+        const componentProps = {
           ref: refView,
           onVnodeMounted() {
             spyMounted()

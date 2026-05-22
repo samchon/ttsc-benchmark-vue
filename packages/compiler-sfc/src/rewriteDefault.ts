@@ -108,7 +108,7 @@ export function hasDefaultExport(ast: Statement[]): boolean {
 function specifierEnd(s: MagicString, end: number, nodeEnd: number | null) {
   // export { default   , foo } ...
   let hasCommas = false
-  let oldEnd = end
+  const oldEnd = end
   while (end < nodeEnd!) {
     if (/\s/.test(s.slice(end, end + 1))) {
       end++

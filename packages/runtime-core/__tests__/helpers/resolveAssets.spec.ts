@@ -29,10 +29,10 @@ describe('resolveAssets', () => {
 
     const Root = {
       components: {
-        FooBar: FooBar,
+        FooBar,
       },
       directives: {
-        BarBaz: BarBaz,
+        BarBaz,
       },
       setup() {
         return () => {
@@ -198,12 +198,12 @@ describe('resolveAssets', () => {
 
     const Base = {
       components: {
-        FooBar: FooBar,
+        FooBar,
       },
     }
     const Mixin = {
       directives: {
-        BarBaz: BarBaz,
+        BarBaz,
       },
     }
 

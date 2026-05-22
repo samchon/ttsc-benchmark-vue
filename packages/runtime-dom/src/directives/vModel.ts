@@ -82,7 +82,7 @@ export const vModelText: ModelDirective<
   },
   // set value on mounted so it's after min/max for type="range"
   mounted(el, { value }) {
-    el.value = value == null ? '' : value
+    el.value = (value === null || value === undefined) ? '' : value
   },
   beforeUpdate(
     el,
@@ -96,7 +96,7 @@ export const vModelText: ModelDirective<
       (number || el.type === 'number') && !/^0\d/.test(el.value)
         ? looseToNumber(el.value)
         : el.value
-    const newValue = value == null ? '' : value
+    const newValue = (value === null || value === undefined) ? '' : value
 
     if (elValue === newValue) {
       return
@@ -249,8 +249,7 @@ function setSelected(el: HTMLSelectElement, value: any) {
   if (isMultiple && !isArrayValue && !isSet(value)) {
     __DEV__ &&
       warn(
-        `<select multiple v-model> expects an Array or Set value for its binding, ` +
-          `but got ${Object.prototype.toString.call(value).slice(8, -1)}.`,
+        `<select multiple v-model> expects an Array or Set value for its binding, but got ${Object.prototype.toString.call(value).slice(8, -1)}.`,
       )
     return
   }

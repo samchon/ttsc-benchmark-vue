@@ -106,9 +106,7 @@ const normalizeSlot = (
       !(ctx && ctx.root !== currentInstance.root)
     ) {
       warn(
-        `Slot "${key}" invoked outside of the render function: ` +
-          `this will not track dependencies used in the slot. ` +
-          `Invoke the slot function inside the render function instead.`,
+        `Slot "${key}" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead.`,
       )
     }
     return normalizeSlotValue(rawSlot(...args))
@@ -129,7 +127,7 @@ const normalizeObjectSlots = (
     const value = rawSlots[key]
     if (isFunction(value)) {
       slots[key] = normalizeSlot(key, value, ctx)
-    } else if (value != null) {
+    } else if ((value !== null && value !== undefined)) {
       if (
         __DEV__ &&
         !(
@@ -138,8 +136,7 @@ const normalizeObjectSlots = (
         )
       ) {
         warn(
-          `Non-function value encountered for slot "${key}". ` +
-            `Prefer function slots for better performance.`,
+          `Non-function value encountered for slot "${key}". Prefer function slots for better performance.`,
         )
       }
       const normalized = normalizeSlotValue(value)
@@ -244,7 +241,7 @@ export const updateSlots = (
   // delete stale slots
   if (needDeletionCheck) {
     for (const key in slots) {
-      if (!isInternalKey(key) && deletionComparisonTarget[key] == null) {
+      if (!isInternalKey(key) && (deletionComparisonTarget[key] === null || deletionComparisonTarget[key] === undefined)) {
         delete slots[key]
       }
     }

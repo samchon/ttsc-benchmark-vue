@@ -129,8 +129,7 @@ export function defineAsyncComponent<
         if (patched) {
           if (__DEV__) {
             warn(
-              `Skipping lazy hydration for component '${getComponentName(resolvedComp!) || resolvedComp!.__file}': ` +
-                `it was updated before lazy hydration performed.`,
+              `Skipping lazy hydration for component '${getComponentName(resolvedComp!) || resolvedComp!.__file}': it was updated before lazy hydration performed.`,
             )
           }
           return
@@ -207,7 +206,7 @@ export function defineAsyncComponent<
         }, delay)
       }
 
-      if (timeout != null) {
+      if ((timeout !== null && timeout !== undefined)) {
         setTimeout(() => {
           if (!loaded.value && !error.value) {
             const err = new Error(

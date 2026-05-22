@@ -252,14 +252,14 @@ export function parse(
   }
 
   // dedent pug/jade templates
-  let templateColumnOffset = 0
-  if (
-    descriptor.template &&
+  const isPugLike =
+    !!descriptor.template &&
     (descriptor.template.lang === 'pug' || descriptor.template.lang === 'jade')
-  ) {
-    ;[descriptor.template.content, templateColumnOffset] = dedent(
-      descriptor.template.content,
-    )
+  const [dedentedContent, templateColumnOffset] = isPugLike
+    ? dedent(descriptor.template!.content)
+    : ['', 0]
+  if (isPugLike) {
+    descriptor.template!.content = dedentedContent
   }
 
   if (sourceMap) {

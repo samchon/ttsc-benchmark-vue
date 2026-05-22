@@ -95,7 +95,7 @@ export const isMemberExpressionBrowser = (exp: ExpressionNode): boolean => {
     .replace(whitespaceRE, s => s.trim())
 
   let state = MemberExpLexState.inMemberExp
-  let stateStack: MemberExpLexState[] = []
+  const stateStack: MemberExpLexState[] = []
   let currentOpenBracketCount = 0
   let currentOpenParensCount = 0
   let currentStringType: "'" | '"' | '`' | null = null
@@ -416,7 +416,7 @@ export function injectProp(
     parentCall = callPath[callPath.length - 1]
   }
 
-  if (props == null || isString(props)) {
+  if ((props === null || props === undefined) || isString(props)) {
     propsWithInjection = createObjectExpression([prop])
   } else if (props.type === NodeTypes.JS_CALL_EXPRESSION) {
     // merged props... add ours

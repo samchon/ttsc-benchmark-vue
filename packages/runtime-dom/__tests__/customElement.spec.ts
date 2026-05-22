@@ -20,7 +20,7 @@ import {
   useShadowRoot,
 } from '../src'
 
-declare var __VUE_HMR_RUNTIME__: HMRRuntime
+declare let __VUE_HMR_RUNTIME__: HMRRuntime
 
 describe('defineCustomElement', () => {
   const container = document.createElement('div')
@@ -1583,7 +1583,7 @@ describe('defineCustomElement', () => {
               expect(props.n).toBe(20)
             },
             render(this: any) {
-              return h('div', this.n + ',' + typeof this.n)
+              return h('div', `${this.n},${typeof this.n}`)
             },
           })
         }),
@@ -2365,7 +2365,7 @@ describe('defineCustomElement', () => {
         },
       },
       render() {
-        return this.boo + ',' + typeof this.boo
+        return `${this.boo},${typeof this.boo}`
       },
     })
     customElements.define('el-attr-removal', E)

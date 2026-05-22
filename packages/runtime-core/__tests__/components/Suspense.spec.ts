@@ -2726,7 +2726,7 @@ describe('Suspense', () => {
               { key: type },
               {
                 default: () => [
-                  renderSlot(this.$slots, 'default', { type: type }),
+                  renderSlot(this.$slots, 'default', { type }),
                 ],
               },
             )
@@ -2887,7 +2887,7 @@ describe('Suspense', () => {
       const CompAsyncSetup = defineAsyncComponent({
         props: ['item', 'id'],
         render(ctx: any) {
-          return h('div', ctx.id + '-' + ctx.item.name)
+          return h('div', `${ctx.id}-${ctx.item.name}`)
         },
       })
       const items = ref([

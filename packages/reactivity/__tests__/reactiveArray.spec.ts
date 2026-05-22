@@ -357,7 +357,7 @@ describe('reactivity/reactive/Array', () => {
       const shallow = shallowReactive([1, 2, 3, 4])
       let result = computed(() => {
         let sum = 0
-        for (let x of shallow) {
+        for (const x of shallow) {
           sum += x ** 2
         }
         return sum
@@ -370,7 +370,7 @@ describe('reactivity/reactive/Array', () => {
       const deep = reactive([{ val: 1 }, { val: 2 }])
       result = computed(() => {
         let sum = 0
-        for (let x of deep) {
+        for (const x of deep) {
           sum += x.val ** 2
         }
         return sum
@@ -601,20 +601,20 @@ describe('reactivity/reactive/Array', () => {
 
     test('reduce left and right', () => {
       function toString(this: any) {
-        return this.val + '-'
+        return `${this.val}-`
       }
       const shallow = shallowReactive([
         { val: 1, toString },
         { val: 2, toString },
       ] as any[])
 
-      expect(shallow.reduce((acc, x) => acc + '' + x.val, undefined)).toBe(
+      expect(shallow.reduce((acc, x) => `${acc}${x.val}`, undefined)).toBe(
         'undefined12',
       )
 
-      let left = computed(() => shallow.reduce((acc, x) => acc + '' + x.val))
+      let left = computed(() => shallow.reduce((acc, x) => `${acc}${x.val}`))
       let right = computed(() =>
-        shallow.reduceRight((acc, x) => acc + '' + x.val),
+        shallow.reduceRight((acc, x) => `${acc}${x.val}`),
       )
       expect(left.value).toBe('1-2')
       expect(right.value).toBe('2-1')

@@ -217,7 +217,7 @@ describe('reactivity/effect', () => {
     const numbers = reactive<Record<string, number>>({ num1: 3 })
     effect(() => {
       dummy = 0
-      for (let key in numbers) {
+      for (const key in numbers) {
         dummy += numbers[key]
       }
     })
@@ -747,7 +747,7 @@ describe('reactivity/effect', () => {
   })
 
   it('events: onTrack', () => {
-    let events: DebuggerEvent[] = []
+    const events: DebuggerEvent[] = []
     let dummy
     const onTrack = vi.fn((e: DebuggerEvent) => {
       events.push(e)
@@ -812,7 +812,7 @@ describe('reactivity/effect', () => {
   })
 
   it('events: onTrigger', () => {
-    let events: DebuggerEvent[] = []
+    const events: DebuggerEvent[] = []
     let dummy
     const onTrigger = vi.fn((e: DebuggerEvent) => {
       events.push(e)

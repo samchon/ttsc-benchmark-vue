@@ -412,7 +412,7 @@ function baseCreateRenderer(
         processCommentNode(n1, n2, container, anchor)
         break
       case Static:
-        if (n1 == null) {
+        if ((n1 === null || n1 === undefined)) {
           mountStaticNode(n2, container, anchor, namespace)
         } else if (__DEV__) {
           patchStaticNode(n1, n2, container, namespace)
@@ -488,15 +488,15 @@ function baseCreateRenderer(
     }
 
     // set ref
-    if (ref != null && parentComponent) {
+    if ((ref !== null && ref !== undefined) && parentComponent) {
       setRef(ref, n1 && n1.ref, parentSuspense, n2 || n1, !n2)
-    } else if (ref == null && n1 && n1.ref != null) {
+    } else if ((ref === null || ref === undefined) && n1 && (n1.ref !== null && n1.ref !== undefined)) {
       setRef(n1.ref, null, parentSuspense, n1, true)
     }
   }
 
   const processText: ProcessTextOrCommentFn = (n1, n2, container, anchor) => {
-    if (n1 == null) {
+    if ((n1 === null || n1 === undefined)) {
       hostInsert(
         (n2.el = hostCreateText(n2.children as string)),
         container,
@@ -516,7 +516,7 @@ function baseCreateRenderer(
     container,
     anchor,
   ) => {
-    if (n1 == null) {
+    if ((n1 === null || n1 === undefined)) {
       hostInsert(
         (n2.el = hostCreateComment((n2.children as string) || '')),
         container,
@@ -614,7 +614,7 @@ function baseCreateRenderer(
       namespace = 'mathml'
     }
 
-    if (n1 == null) {
+    if ((n1 === null || n1 === undefined)) {
       mountElement(
         n2,
         container,
@@ -865,8 +865,8 @@ function baseCreateRenderer(
     // #9135 innerHTML / textContent unset needs to happen before possible
     // new children mount
     if (
-      (oldProps.innerHTML && newProps.innerHTML == null) ||
-      (oldProps.textContent && newProps.textContent == null)
+      (oldProps.innerHTML && (newProps.innerHTML === null || newProps.innerHTML === undefined)) ||
+      (oldProps.textContent && (newProps.textContent === null || newProps.textContent === undefined))
     ) {
       hostSetElementText(el, '')
     }
@@ -951,7 +951,7 @@ function baseCreateRenderer(
           hostSetElementText(el, n2.children as string)
         }
       }
-    } else if (!optimized && dynamicChildren == null) {
+    } else if (!optimized && (dynamicChildren === null || dynamicChildren === undefined)) {
       // unoptimized, full diff
       patchProps(el, oldProps, newProps, parentComponent, namespace)
     }
@@ -1081,7 +1081,7 @@ function baseCreateRenderer(
         : fragmentSlotScopeIds
     }
 
-    if (n1 == null) {
+    if ((n1 === null || n1 === undefined)) {
       hostInsert(fragmentStartAnchor, container, anchor)
       hostInsert(fragmentEndAnchor, container, anchor)
       // a fragment can only have array children
@@ -1130,7 +1130,7 @@ function baseCreateRenderer(
           //  get moved around. Make sure all root level vnodes inherit el.
           // #2134 or if it's a component root, it may also get moved around
           // as the component is being moved.
-          n2.key != null ||
+          (n2.key !== null && n2.key !== undefined) ||
           (parentComponent && n2 === parentComponent.subTree)
         ) {
           traverseStaticChildren(n1, n2, true /* shallow */)
@@ -1167,7 +1167,7 @@ function baseCreateRenderer(
     optimized: boolean,
   ) => {
     n2.slotScopeIds = slotScopeIds
-    if (n1 == null) {
+    if ((n1 === null || n1 === undefined)) {
       if (n2.shapeFlag & ShapeFlags.COMPONENT_KEPT_ALIVE) {
         ;(parentComponent!.ctx as KeepAliveContext).activate(
           n2,
@@ -1489,7 +1489,7 @@ function baseCreateRenderer(
         // updateComponent
         // This is triggered by mutation of component's own state (next: null)
         // OR parent calling processComponent (next: VNode)
-        let originNext = next
+        const originNext = next
         let vnodeHook: VNodeHook | null | undefined
         if (__DEV__) {
           pushWarningContext(next || instance.vnode)
@@ -1921,7 +1921,7 @@ function baseCreateRenderer(
         const nextChild = (c2[i] = optimized
           ? cloneIfMounted(c2[i] as VNode)
           : normalizeVNode(c2[i]))
-        if (nextChild.key != null) {
+        if ((nextChild.key !== null && nextChild.key !== undefined)) {
           if (__DEV__ && keyToNewIndexMap.has(nextChild.key)) {
             warn(
               `Duplicate keys found during update:`,
@@ -1957,7 +1957,7 @@ function baseCreateRenderer(
           continue
         }
         let newIndex
-        if (prevChild.key != null) {
+        if ((prevChild.key !== null && prevChild.key !== undefined)) {
           newIndex = keyToNewIndexMap.get(prevChild.key)
         } else {
           // key-less node, try to locate a key-less node of the same type
@@ -2142,14 +2142,14 @@ function baseCreateRenderer(
     }
 
     // unset ref
-    if (ref != null) {
+    if ((ref !== null && ref !== undefined)) {
       pauseTracking()
       setRef(ref, null, parentSuspense, vnode, true)
       resetTracking()
     }
 
     // #6593 should clean memo cache when unmount
-    if (cacheIndex != null) {
+    if ((cacheIndex !== null && cacheIndex !== undefined)) {
       parentComponent!.renderCache[cacheIndex] = undefined
     }
 
@@ -2226,7 +2226,7 @@ function baseCreateRenderer(
     // v-for + v-memo stores cached vnodes inside renderList's array cache rather
     // than component renderCache. Invalidate detached cached vnodes after
     // unmount so a later v-if remount won't reuse a vnode whose DOM is gone.
-    const shouldInvalidateMemo = memo != null && cacheIndex == null
+    const shouldInvalidateMemo = (memo !== null && memo !== undefined) && (cacheIndex === null || cacheIndex === undefined)
 
     if (
       (shouldInvokeVnodeHook &&
@@ -2397,7 +2397,7 @@ function baseCreateRenderer(
   let isFlushing = false
   const render: RootRenderFunction = (vnode, container, namespace) => {
     let instance
-    if (vnode == null) {
+    if ((vnode === null || vnode === undefined)) {
       if (container._vnode) {
         unmount(container._vnode, null, null, true)
         instance = container._vnode.component

@@ -434,7 +434,7 @@ const createVNodeWithArgsTransform = (
 }
 
 const normalizeKey = ({ key }: VNodeProps): VNode['key'] =>
-  key != null ? key : null
+  (key !== null && key !== undefined) ? key : null
 
 const normalizeRef = ({
   ref,
@@ -442,10 +442,10 @@ const normalizeRef = ({
   ref_for,
 }: VNodeProps): VNodeNormalizedRefAtom | null => {
   if (typeof ref === 'number') {
-    ref = '' + ref
+    ref = `${ref}`
   }
   return (
-    ref != null
+    (ref !== null && ref !== undefined)
       ? isString(ref) || isRef(ref) || isFunction(ref)
         ? { i: currentRenderingInstance, r: ref, k: ref_key, f: !!ref_for }
         : ref
@@ -786,7 +786,7 @@ export function createCommentVNode(
 }
 
 export function normalizeVNode(child: VNodeChild): VNode {
-  if (child == null || typeof child === 'boolean') {
+  if ((child === null || child === undefined) || typeof child === 'boolean') {
     // empty placeholder
     return createVNode(Comment)
   } else if (isArray(child)) {
@@ -818,7 +818,7 @@ export function cloneIfMounted(child: VNode): VNode {
 export function normalizeChildren(vnode: VNode, children: unknown): void {
   let type = 0
   const { shapeFlag } = vnode
-  if (children == null) {
+  if ((children === null || children === undefined)) {
     children = null
   } else if (isArray(children)) {
     type = ShapeFlags.ARRAY_CHILDREN
@@ -893,8 +893,8 @@ export function mergeProps(...args: (Data & VNodeProps)[]): Data {
             ? [].concat(existing as any, incoming as any)
             : incoming
         } else if (
-          incoming == null &&
-          existing == null &&
+          (incoming === null || incoming === undefined) &&
+          (existing === null || existing === undefined) &&
           // mergeProps({ 'onUpdate:modelValue': undefined }) should not retain
           // the model listener.
           !isModelListener(key)

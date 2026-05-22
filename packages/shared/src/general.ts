@@ -78,7 +78,7 @@ export const isIntegerKey = (key: unknown): boolean =>
   isString(key) &&
   key !== 'NaN' &&
   key[0] !== '-' &&
-  '' + parseInt(key, 10) === key
+  `${parseInt(key, 10)}` === key
 
 export const isReservedProp: (key: string) => boolean = /*@__PURE__*/ makeMap(
   // the leading comma is intentional so empty string "" is also included
@@ -182,7 +182,7 @@ export const toNumber = (val: any): any => {
 }
 
 // for typeof global checks without @types/node
-declare var global: {}
+declare let global: {}
 
 let _globalThis: any
 export const getGlobalThis = (): any => {

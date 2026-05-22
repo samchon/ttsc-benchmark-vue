@@ -64,7 +64,7 @@ export function inject(
     let provides = currentApp
       ? currentApp._context.provides
       : instance
-        ? instance.parent == null || instance.ce
+        ? (instance.parent === null || instance.parent === undefined) || instance.ce
           ? instance.vnode.appContext && instance.vnode.appContext.provides
           : instance.parent.provides
         : undefined

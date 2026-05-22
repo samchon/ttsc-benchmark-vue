@@ -113,7 +113,7 @@ describe('ssr: scopedId runtime behavior', () => {
                     null,
                     push,
                     parent,
-                    'slotted-s' + scopeId,
+                    `slotted-s${scopeId}`,
                   )
                 },
               ),
@@ -222,7 +222,7 @@ describe('ssr: scopedId runtime behavior', () => {
                     null,
                     push,
                     parent,
-                    'slotted-s' + scopeId,
+                    `slotted-s${scopeId}`,
                   )
                 },
               ),

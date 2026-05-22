@@ -32,7 +32,7 @@ export const parserOptions: ParserOptions = {
             a =>
               a.type === NodeTypes.ATTRIBUTE &&
               a.name === 'encoding' &&
-              a.value != null &&
+              (a.value !== null && a.value !== undefined) &&
               (a.value.content === 'text/html' ||
                 a.value.content === 'application/xhtml+xml'),
           )

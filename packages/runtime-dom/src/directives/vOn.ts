@@ -139,7 +139,7 @@ export const withKeys = <T extends (event: KeyboardEvent) => any>(
             DeprecationTypes.V_ON_KEYCODE_MODIFIER,
             instance,
           ) &&
-          modifiers.some(mod => mod == keyCode)
+          modifiers.some(mod => mod === keyCode)
         ) {
           return fn(event)
         }

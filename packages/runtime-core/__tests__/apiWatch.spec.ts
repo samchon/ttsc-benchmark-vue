@@ -886,7 +886,7 @@ describe('api: watch', () => {
         watch(
           count,
           () => {
-            calls.push('watch ' + count.value)
+            calls.push(`watch ${count.value}`)
           },
           { flush: 'pre' },
         )

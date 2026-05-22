@@ -793,7 +793,7 @@ export function validateComponentName(
 ): void {
   if (isBuiltInTag(name) || isNativeTag(name)) {
     warn(
-      'Do not use built-in or reserved HTML elements as component id: ' + name,
+      `Do not use built-in or reserved HTML elements as component id: ${name}`,
     )
   }
 }
@@ -906,10 +906,7 @@ function setupStatefulComponent(
         if (__DEV__ && !instance.suspense) {
           const name = formatComponentName(instance, Component)
           warn(
-            `Component <${name}>: setup function returned a promise, but no ` +
-              `<Suspense> boundary was found in the parent component tree. ` +
-              `A component with async setup() must be nested in a <Suspense> ` +
-              `in order to be rendered.`,
+            `Component <${name}>: setup function returned a promise, but no <Suspense> boundary was found in the parent component tree. A component with async setup() must be nested in a <Suspense> in order to be rendered.`,
           )
         }
       } else if (__DEV__) {
@@ -1077,15 +1074,13 @@ export function finishComponentSetup(
     if (!compile && Component.template) {
       /* v8 ignore start */
       warn(
-        `Component provided template option but ` +
-          `runtime compilation is not supported in this build of Vue.` +
-          (__ESM_BUNDLER__
+        `Component provided template option but runtime compilation is not supported in this build of Vue.${(__ESM_BUNDLER__
             ? ` Configure your bundler to alias "vue" to "vue/dist/vue.esm-bundler.js".`
             : __ESM_BROWSER__
               ? ` Use "vue.esm-browser.js" instead.`
               : __GLOBAL__
                 ? ` Use "vue.global.js" instead.`
-                : ``) /* should not happen */,
+                : ``)}` /* should not happen */,
       )
       /* v8 ignore stop */
     } else {
@@ -1137,7 +1132,7 @@ export function createSetupContext(
       if (instance.exposed) {
         warn(`expose() should be called only once per setup().`)
       }
-      if (exposed != null) {
+      if ((exposed !== null && exposed !== undefined)) {
         let exposedType: string = typeof exposed
         if (exposedType === 'object') {
           if (isArray(exposed)) {

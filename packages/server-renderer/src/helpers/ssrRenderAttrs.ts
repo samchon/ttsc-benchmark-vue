@@ -49,7 +49,7 @@ export function ssrRenderAttrs(
     } else if (key === 'className') {
       // className should not go through ssrRenderClass which normalizes non-string
       // values into strings. it should coerce directly into strings
-      if (value != null) {
+      if ((value !== null && value !== undefined)) {
         ret += ` class="${escapeHtml(String(value))}"`
       }
     } else {

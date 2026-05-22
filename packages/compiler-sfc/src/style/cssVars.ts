@@ -201,16 +201,13 @@ export function genNormalScriptCssVarsCode(
   defaultVar: string,
 ): string {
   return (
-    `\nimport { ${CSS_VARS_HELPER} as _${CSS_VARS_HELPER} } from 'vue'\n` +
-    `const __injectCSSVars__ = () => {\n${genCssVarsCode(
+    `\nimport { ${CSS_VARS_HELPER} as _${CSS_VARS_HELPER} } from 'vue'\nconst __injectCSSVars__ = () => {\n${genCssVarsCode(
       cssVars,
       bindings,
       id,
       isProd,
-    )}}\n` +
-    `const __setup__ = ${defaultVar}.setup\n` +
-    `${defaultVar}.setup = __setup__\n` +
-    `  ? (props, ctx) => { __injectCSSVars__();return __setup__(props, ctx) }\n` +
-    `  : __injectCSSVars__\n`
+    )}}\nconst __setup__ = ${defaultVar}.setup\n${defaultVar}.setup = __setup__\n  ? (props, ctx) => { __injectCSSVars__();return __setup__(props, ctx) }
+  : __injectCSSVars__
+`
   )
 }

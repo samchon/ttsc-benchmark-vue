@@ -387,17 +387,17 @@ describe('vnode', () => {
 
   describe('mergeProps', () => {
     test('class', () => {
-      let props1: Data = { class: { c: true } }
-      let props2: Data = { class: ['cc'] }
-      let props3: Data = { class: [{ ccc: true }] }
-      let props4: Data = { class: { cccc: true } }
+      const props1: Data = { class: { c: true } }
+      const props2: Data = { class: ['cc'] }
+      const props3: Data = { class: [{ ccc: true }] }
+      const props4: Data = { class: { cccc: true } }
       expect(mergeProps(props1, props2, props3, props4)).toMatchObject({
         class: 'c cc ccc cccc',
       })
     })
 
     test('style', () => {
-      let props1: Data = {
+      const props1: Data = {
         style: [
           {
             color: 'red',
@@ -405,7 +405,7 @@ describe('vnode', () => {
           },
         ],
       }
-      let props2: Data = {
+      const props2: Data = {
         style: [
           {
             color: 'blue',
@@ -429,10 +429,10 @@ describe('vnode', () => {
     })
 
     test('style w/ strings', () => {
-      let props1: Data = {
+      const props1: Data = {
         style: 'width:100px;right:10;top:10',
       }
-      let props2: Data = {
+      const props2: Data = {
         style: [
           {
             color: 'blue',
@@ -458,17 +458,17 @@ describe('vnode', () => {
     })
 
     test('handlers', () => {
-      let clickHandler1 = function () {}
-      let clickHandler2 = function () {}
-      let focusHandler2 = function () {}
+      const clickHandler1 = function () {}
+      const clickHandler2 = function () {}
+      const focusHandler2 = function () {}
 
-      let props1: Data = { onClick: clickHandler1 }
-      let props2: Data = { onClick: clickHandler2, onFocus: focusHandler2 }
+      const props1: Data = { onClick: clickHandler1 }
+      const props2: Data = { onClick: clickHandler2, onFocus: focusHandler2 }
       expect(mergeProps(props1, props2)).toMatchObject({
         onClick: [clickHandler1, clickHandler2],
         onFocus: focusHandler2,
       })
-      let props3: Data = { onClick: undefined }
+      const props3: Data = { onClick: undefined }
       expect(mergeProps(props1, props3)).toMatchObject({
         onClick: clickHandler1,
       })
@@ -486,9 +486,9 @@ describe('vnode', () => {
     })
 
     test('default', () => {
-      let props1: Data = { foo: 'c' }
-      let props2: Data = { foo: {}, bar: ['cc'] }
-      let props3: Data = { baz: { ccc: true } }
+      const props1: Data = { foo: 'c' }
+      const props2: Data = { foo: {}, bar: ['cc'] }
+      const props3: Data = { baz: { ccc: true } }
       expect(mergeProps(props1, props2, props3)).toMatchObject({
         foo: {},
         bar: ['cc'],

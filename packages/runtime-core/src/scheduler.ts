@@ -209,7 +209,7 @@ export function flushPostFlushCbs(seen?: CountMap): void {
 }
 
 const getId = (job: SchedulerJob): number =>
-  job.id == null ? (job.flags! & SchedulerJobFlags.PRE ? -1 : Infinity) : job.id
+  (job.id === null || job.id === undefined) ? (job.flags! & SchedulerJobFlags.PRE ? -1 : Infinity) : job.id
 
 function flushJobs(seen?: CountMap) {
   if (__DEV__) {
@@ -275,11 +275,7 @@ function checkRecursiveUpdates(seen: CountMap, fn: SchedulerJob) {
     handleError(
       `Maximum recursive updates exceeded${
         componentName ? ` in component <${componentName}>` : ``
-      }. ` +
-        `This means you have a reactive effect that is mutating its own ` +
-        `dependencies and thus recursively triggering itself. Possible sources ` +
-        `include component template, render function, updated hook or ` +
-        `watcher source function.`,
+      }. This means you have a reactive effect that is mutating its own dependencies and thus recursively triggering itself. Possible sources include component template, render function, updated hook or watcher source function.`,
       null,
       ErrorCodes.APP_ERROR_HANDLER,
     )

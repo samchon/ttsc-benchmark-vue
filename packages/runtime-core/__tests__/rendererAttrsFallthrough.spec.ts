@@ -42,7 +42,7 @@ describe('attribute fallthrough', () => {
           h(Child, {
             foo: count.value + 1,
             id: 'test',
-            class: 'c' + count.value,
+            class: `c${count.value}`,
             style: { color: count.value ? 'red' : 'green' },
             onClick: inc,
             'data-id': count.value + 1,
@@ -105,7 +105,7 @@ describe('attribute fallthrough', () => {
       h(Child, {
         foo: count.value + 1,
         id: 'test',
-        class: 'c' + count.value,
+        class: `c${count.value}`,
         style: { color: count.value ? 'red' : 'green' },
         onClick: inc,
       })
@@ -163,7 +163,7 @@ describe('attribute fallthrough', () => {
       h(Child, {
         foo: count.value + 1,
         id: 'test',
-        class: 'c' + count.value,
+        class: `c${count.value}`,
         style: { color: count.value ? 'red' : 'green' },
         onClick: inc,
       })
@@ -222,7 +222,7 @@ describe('attribute fallthrough', () => {
           h(Child, {
             foo: 1,
             id: 'test',
-            class: 'c' + count.value,
+            class: `c${count.value}`,
             style: { color: count.value ? 'red' : 'green' },
             onClick: inc,
           })

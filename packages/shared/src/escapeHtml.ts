@@ -1,7 +1,7 @@
 const escapeRE = /["'&<>]/
 
 export function escapeHtml(string: unknown): string {
-  const str = '' + string
+  const str = `${string}`
   const match = escapeRE.exec(str)
 
   if (!match) {

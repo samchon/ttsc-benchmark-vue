@@ -393,7 +393,7 @@ describe('component: proxy', () => {
       },
       computed: {
         greet() {
-          return 'Hi ' + (this as any).name
+          return `Hi ${(this as any).name}`
         },
       },
       render() {},
@@ -487,7 +487,7 @@ describe('component: proxy', () => {
     expect(
       `Property ${JSON.stringify(
         Symbol.unscopables,
-      )} was accessed during render ` + `but is not defined on instance.`,
+      )} was accessed during render but is not defined on instance.`,
     ).toHaveBeenWarned()
   })
 

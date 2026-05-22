@@ -65,7 +65,7 @@ export const transformSrcset: NodeTransform = (
             const { url } = imageCandidates[i]
             if (isDataUrl(url)) {
               imageCandidates[i + 1].url =
-                url + ',' + imageCandidates[i + 1].url
+                `${url},${imageCandidates[i + 1].url}`
               imageCandidates.splice(i, 1)
             }
           }

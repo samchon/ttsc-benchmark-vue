@@ -148,7 +148,7 @@ describe('watch', () => {
   })
 
   test('nested calls to baseWatch and onWatcherCleanup', async () => {
-    let calls: string[] = []
+    const calls: string[] = []
     let source: Ref<number>
     let copyist: Ref<number>
     const scope = new EffectScope()

@@ -353,7 +353,7 @@ export function updateProps(
         if (
           !rawProps ||
           (!hasOwn(rawProps, key) &&
-            (!__COMPAT__ || !hasOwn(rawProps, key + 'Native')))
+            (!__COMPAT__ || !hasOwn(rawProps, `${key}Native`)))
         ) {
           delete attrs[key]
           hasAttrsChanged = true
@@ -458,7 +458,7 @@ function resolvePropValue(
   isAbsent: boolean,
 ) {
   const opt = options[key]
-  if (opt != null) {
+  if ((opt !== null && opt !== undefined)) {
     const hasDefault = hasOwn(opt, 'default')
     // default values
     if (hasDefault && value === undefined) {
@@ -659,8 +659,8 @@ function validateProps(
   const options = instance.propsOptions[0]
   const camelizePropsKey = Object.keys(rawProps).map(key => camelize(key))
   for (const key in options) {
-    let opt = options[key]
-    if (opt == null) continue
+    const opt = options[key]
+    if ((opt === null || opt === undefined)) continue
     validateProp(
       key,
       resolvedValues[key],
@@ -684,15 +684,15 @@ function validateProp(
   const { type, required, validator, skipCheck } = prop
   // required!
   if (required && isAbsent) {
-    warn('Missing required prop: "' + name + '"')
+    warn(`Missing required prop: "${name}"`)
     return
   }
   // missing but optional
-  if (value == null && !required) {
+  if ((value === null || value === undefined) && !required) {
     return
   }
   // type check
-  if (type != null && type !== true && !skipCheck) {
+  if ((type !== null && type !== undefined) && type !== true && !skipCheck) {
     let isValid = false
     const types = isArray(type) ? type : [type]
     const expectedTypes = []
@@ -709,7 +709,7 @@ function validateProp(
   }
   // custom validator
   if (validator && !validator(value, props)) {
-    warn('Invalid prop: custom validator check failed for prop "' + name + '".')
+    warn(`Invalid prop: custom validator check failed for prop "${name}".`)
   }
 }
 
@@ -763,8 +763,7 @@ function getInvalidTypeMessage(
 ): string {
   if (expectedTypes.length === 0) {
     return (
-      `Prop type [] for prop "${name}" won't match anything.` +
-      ` Did you mean to use type Array instead?`
+      `Prop type [] for prop "${name}" won't match anything. Did you mean to use type Array instead?`
     )
   }
   let message =

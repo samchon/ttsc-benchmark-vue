@@ -350,7 +350,7 @@ function testRender(type: string, render: typeof renderToString) {
           props: ['msg'],
           async setup(props: any) {
             return {
-              localMsg: props.msg + '!',
+              localMsg: `${props.msg}!`,
             }
           },
           ssrRender(ctx: any, push: any) {
@@ -362,7 +362,7 @@ function testRender(type: string, render: typeof renderToString) {
           props: ['msg'],
           async setup(props: any) {
             return {
-              localMsg: props.msg + '!',
+              localMsg: `${props.msg}!`,
             }
           },
           render(this: any) {
@@ -1037,8 +1037,8 @@ function testRender(type: string, render: typeof renderToString) {
     test('onServerPrefetch are run in parallel', async () => {
       const first = vi.fn(() => Promise.resolve())
       const second = vi.fn(() => Promise.resolve())
-      let checkOther = [false, false]
-      let done = [false, false]
+      const checkOther = [false, false]
+      const done = [false, false]
       const app = createApp({
         setup() {
           onServerPrefetch(async () => {

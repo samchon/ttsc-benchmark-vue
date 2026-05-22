@@ -103,14 +103,14 @@ const less: StylePreprocessor = (source, map, options, load = require) => {
       code: result.css.toString(),
       map: merge(map, result.map),
       errors: [],
-      dependencies: dependencies,
+      dependencies,
     }
   }
 
   return {
     code: result.css.toString(),
     errors: [],
-    dependencies: dependencies,
+    dependencies,
   }
 }
 

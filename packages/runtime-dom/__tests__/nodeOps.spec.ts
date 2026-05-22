@@ -123,7 +123,7 @@ describe('runtime-dom: node-ops', () => {
     })
 
     test('The math elements should keep their MathML namespace', async () => {
-      let root = document.createElement('div') as any
+      const root = document.createElement('div') as any
 
       let countRef: any
       const component = defineComponent({

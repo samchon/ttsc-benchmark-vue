@@ -187,7 +187,7 @@ describe('reactivity/computed', () => {
 
   // #5720
   it('should invalidate before non-computed effects', () => {
-    let plusOneValues: number[] = []
+    const plusOneValues: number[] = []
     const n = ref(0)
     const plusOne = computed(() => n.value + 1)
     effect(() => {
@@ -231,7 +231,7 @@ describe('reactivity/computed', () => {
   })
 
   it('debug: onTrack', () => {
-    let events: DebuggerEvent[] = []
+    const events: DebuggerEvent[] = []
     const onTrack = vi.fn((e: DebuggerEvent) => {
       events.push(e)
     })
@@ -264,7 +264,7 @@ describe('reactivity/computed', () => {
   })
 
   it('debug: onTrigger (reactive)', () => {
-    let events: DebuggerEvent[] = []
+    const events: DebuggerEvent[] = []
     const onTrigger = vi.fn((e: DebuggerEvent) => {
       events.push(e)
     })
@@ -881,7 +881,7 @@ describe('reactivity/computed', () => {
     const e = computed(() => d.value)
     const Comp = {
       setup: () => {
-        return () => d.value + ' | ' + e.value
+        return () => `${d.value} | ${e.value}`
       },
     }
     const root = nodeOps.createElement('div')
@@ -929,7 +929,7 @@ describe('reactivity/computed', () => {
       return 0
     })
     const c2 = computed(() => {
-      return v.value + ',' + c1.value
+      return `${v.value},${c1.value}`
     })
 
     expect(c2.value).toBe('0,0')
@@ -939,7 +939,7 @@ describe('reactivity/computed', () => {
   })
 
   it('debug: onTrigger (ref)', () => {
-    let events: DebuggerEvent[] = []
+    const events: DebuggerEvent[] = []
     const onTrigger = vi.fn((e: DebuggerEvent) => {
       events.push(e)
     })

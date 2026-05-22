@@ -119,13 +119,13 @@ function formatTrace(trace: ComponentTraceStack): any[] {
 function formatTraceEntry({ vnode, recurseCount }: TraceEntry): any[] {
   const postfix =
     recurseCount > 0 ? `... (${recurseCount} recursive calls)` : ``
-  const isRoot = vnode.component ? vnode.component.parent == null : false
+  const isRoot = vnode.component ? (vnode.component.parent === null || vnode.component.parent === undefined) : false
   const open = ` at <${formatComponentName(
     vnode.component,
     vnode.type,
     isRoot,
   )}`
-  const close = `>` + postfix
+  const close = `>${postfix}`
   return vnode.props
     ? [open, ...formatProps(vnode.props), close]
     : [open + close]
@@ -152,7 +152,7 @@ function formatProp(key: string, value: unknown, raw?: boolean): any {
   } else if (
     typeof value === 'number' ||
     typeof value === 'boolean' ||
-    value == null
+    (value === null || value === undefined)
   ) {
     return raw ? value : [`${key}=${value}`]
   } else if (isRef(value)) {
@@ -176,7 +176,7 @@ export function assertNumber(val: unknown, type: string): void {
   } else if (typeof val !== 'number') {
     warn(`${type} is not a valid number - ` + `got ${JSON.stringify(val)}.`)
   } else if (isNaN(val)) {
-    warn(`${type} is NaN - ` + 'the duration expression might be incorrect.')
+    warn(`${type} is NaN - the duration expression might be incorrect.`)
   }
 }
 /* v8 ignore stop */

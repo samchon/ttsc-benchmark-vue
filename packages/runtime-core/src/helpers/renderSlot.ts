@@ -92,7 +92,7 @@ export function renderSlot(
       : PatchFlags.BAIL,
   )
   if (!noSlotted && rendered.scopeId) {
-    rendered.slotScopeIds = [rendered.scopeId + '-s']
+    rendered.slotScopeIds = [`${rendered.scopeId}-s`]
   }
   if (slot && (slot as ContextualRenderFn)._c) {
     ;(slot as ContextualRenderFn)._d = true
