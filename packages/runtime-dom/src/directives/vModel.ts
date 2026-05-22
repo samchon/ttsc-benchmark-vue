@@ -378,8 +378,11 @@ export function initVModelForSSR(): void {
       vnode.type.toUpperCase(),
       vnode.props && vnode.props.type,
     )
-    if (modelToUse.getSSRProps) {
-      return modelToUse.getSSRProps(binding, vnode)
+    const getSSRProps = modelToUse.getSSRProps as
+      | ModelDirective<HTMLElement>['getSSRProps']
+      | undefined
+    if (getSSRProps) {
+      return getSSRProps(binding, vnode)
     }
   }
 }
