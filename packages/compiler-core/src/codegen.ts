@@ -204,7 +204,8 @@ function createCodegenContext(
             // no newlines; fast path to avoid newline detection
             if (__TEST__ && code.includes('\n')) {
               throw new Error(
-                `CodegenContext.push() called newlineIndex: none, but containsnewlines: ${code.replace(/\n/g, '\\n')}`,
+                `CodegenContext.push() called newlineIndex: none, but contains` +
+                  `newlines: ${code.replace(/\n/g, '\\n')}`,
               )
             }
             context.column += code.length
@@ -249,8 +250,7 @@ function createCodegenContext(
   }
 
   function newline(n: number) {
-    context.push(`
-${`  `.repeat(n)}`, NewlineType.Start)
+    context.push(`\n${`  `.repeat(n)}`, NewlineType.Start)
   }
 
   function addMapping(loc: Position, name: string | null = null) {
@@ -261,7 +261,7 @@ ${`  `.repeat(n)}`, NewlineType.Start)
     if (name !== null && !_names.has(name)) _names.add(name)
     _mappings.add({
       originalLine: loc.line,
-      originalColumn: loc.column - 1,
+      originalColumn: loc.column - 1, // source-map column is 0 based
       generatedLine: context.line,
       generatedColumn: context.column - 1,
       source: filename,
@@ -302,7 +302,11 @@ export function generate(
   const helpers = Array.from(ast.helpers)
   const hasHelpers = helpers.length > 0
   const useWithBlock = !prefixIdentifiers && mode !== 'module'
-  const genScopeId = !__BROWSER__ && (scopeId !== null && scopeId !== undefined) && mode === 'module'
+  const genScopeId =
+    !__BROWSER__ &&
+    scopeId !== null &&
+    scopeId !== undefined &&
+    mode === 'module'
   const isSetupInlined = !__BROWSER__ && !!options.inline
 
   // preambles
@@ -662,7 +666,7 @@ function genNode(node: CodegenNode | symbol | string, context: CodegenContext) {
     case NodeTypes.FOR:
       __DEV__ &&
         assert(
-          (node.codegenNode !== null && node.codegenNode !== undefined),
+          node.codegenNode !== null && node.codegenNode !== undefined,
           `Codegen node is missing for element/if/for node. ` +
             `Apply appropriate transforms first.`,
         )
@@ -834,7 +838,7 @@ function genVNodeCall(node: VNodeCall, context: CodegenContext) {
     if (__DEV__) {
       if (patchFlag < 0) {
         // special flags (negative and mutually exclusive)
-        patchFlagString = patchFlag + ` /* ${PatchFlagNames[patchFlag]} */`
+        patchFlagString = `${patchFlag} /* ${PatchFlagNames[patchFlag]} */`
       } else {
         // bitwise flags
         const flagNames = Object.keys(PatchFlagNames)
@@ -842,7 +846,7 @@ function genVNodeCall(node: VNodeCall, context: CodegenContext) {
           .filter(n => n > 0 && patchFlag & n)
           .map(n => PatchFlagNames[n as PatchFlags])
           .join(`, `)
-        patchFlagString = patchFlag + ` /* ${flagNames} */`
+        patchFlagString = `${patchFlag} /* ${flagNames} */`
       }
     } else {
       patchFlagString = String(patchFlag)
@@ -880,7 +884,7 @@ function genVNodeCall(node: VNodeCall, context: CodegenContext) {
 function genNullableArgs(args: any[]): CallExpression['arguments'] {
   let i = args.length
   while (i--) {
-    if ((args[i] !== null && args[i] !== undefined)) break
+    if (args[i] !== null && args[i] !== undefined) break
   }
   return args.slice(0, i + 1).map(arg => arg || `null`)
 }

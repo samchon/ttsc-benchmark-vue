@@ -22,7 +22,7 @@ export function patchAttr(
   isBoolean: boolean = isSpecialBooleanAttr(key),
 ): void {
   if (isSVG && key.startsWith('xlink:')) {
-    if ((value === null || value === undefined)) {
+    if (value === null || value === undefined) {
       el.removeAttributeNS(xlinkNS, key.slice(6, key.length))
     } else {
       el.setAttributeNS(xlinkNS, key, value)
@@ -34,9 +34,11 @@ export function patchAttr(
 
     // note we are only checking boolean attributes that don't have a
     // corresponding dom prop of the same name here.
-    if ((value === null || value === undefined) || (isBoolean && !includeBooleanAttr(
-      value,
-    ))) {
+    if (
+      value === null ||
+      value === undefined ||
+      (isBoolean && !includeBooleanAttr(value))
+    ) {
       el.removeAttribute(key)
     } else {
       // attribute value is a string https://html.spec.whatwg.org/multipage/dom.html#attributes

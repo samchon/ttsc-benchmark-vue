@@ -141,7 +141,7 @@ export const transformModel: DirectiveTransform = (dir, node, context) => {
   if (dir.modifiers.length && node.tagType === ElementTypes.COMPONENT) {
     const modifiers = dir.modifiers
       .map(m => m.content)
-      .map(m => `${(isSimpleIdentifier(m) ? m : JSON.stringify(m))}: true`)
+      .map(m => `${isSimpleIdentifier(m) ? m : JSON.stringify(m)}: true`)
       .join(`, `)
     const modifiersKey = arg
       ? isStaticExp(arg)

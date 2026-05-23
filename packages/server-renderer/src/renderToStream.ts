@@ -43,7 +43,7 @@ async function unrollBuffer(
 
 function unrollBufferSync(buffer: SSRBuffer, stream: SimpleReadable) {
   for (let i = 0; i < buffer.length; i++) {
-    let item = buffer[i]
+    const item = buffer[i]
     if (isString(item)) {
       stream.push(item)
     } else {
@@ -130,7 +130,7 @@ export function pipeToNodeWritable(
 ): void {
   renderToSimpleStream(input, context, {
     push(content) {
-      if ((content !== null && content !== undefined)) {
+      if (content !== null && content !== undefined) {
         writable.write(content)
       } else {
         writable.end()
@@ -162,7 +162,7 @@ export function renderToWebStream(
       renderToSimpleStream(input, context, {
         push(content) {
           if (cancelled) return
-          if ((content !== null && content !== undefined)) {
+          if (content !== null && content !== undefined) {
             controller.enqueue(encoder.encode(content))
           } else {
             controller.close()
@@ -198,7 +198,7 @@ export function pipeToWebWritable(
       if (hasReady) {
         await writer.ready
       }
-      if ((content !== null && content !== undefined)) {
+      if (content !== null && content !== undefined) {
         return writer.write(encoder.encode(content))
       } else {
         return writer.close()

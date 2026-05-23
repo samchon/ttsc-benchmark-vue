@@ -171,7 +171,10 @@ export const ssrTransformElement: NodeTransform = (node, context) => {
                   tempExp,
                   createCallExpression(
                     context.helper(SSR_GET_DYNAMIC_MODEL_PROPS),
-                    [tempExp, vModel.exp!],
+                    [
+                      tempExp, // existing props
+                      vModel.exp!, // model
+                    ],
                   ),
                 ]),
               ]),
@@ -296,7 +299,7 @@ export const ssrTransformElement: NodeTransform = (node, context) => {
                         ),
                         createSimpleExpression(` ${attrName}`, true),
                         createSimpleExpression('', true),
-                        false,
+                        false /* no newline */,
                       ),
                     )
                   } else if (isSSRSafeAttrName(attrName)) {
@@ -347,8 +350,9 @@ export const ssrTransformElement: NodeTransform = (node, context) => {
             staticClassBinding = JSON.stringify(prop.value.content)
           }
           openTag.push(
-            ` ${prop.name}` +
-              (prop.value ? `="${escapeHtml(prop.value.content)}"` : ``),
+            ` ${prop.name}${
+              prop.value ? `="${escapeHtml(prop.value.content)}"` : ``
+            }`,
           )
         }
       }

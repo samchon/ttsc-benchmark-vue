@@ -354,7 +354,7 @@ export function createElementBlock(
       patchFlag,
       dynamicProps,
       shapeFlag,
-      true,
+      true /* isBlock */,
     ),
   )
 }
@@ -374,7 +374,14 @@ export function createBlock(
   dynamicProps?: string[],
 ): VNode {
   return setupBlock(
-    createVNode(type, props, children, patchFlag, dynamicProps, true),
+    createVNode(
+      type,
+      props,
+      children,
+      patchFlag,
+      dynamicProps,
+      true /* isBlock: prevent a block from tracking itself */,
+    ),
   )
 }
 
@@ -427,7 +434,7 @@ const createVNodeWithArgsTransform = (
 }
 
 const normalizeKey = ({ key }: VNodeProps): VNode['key'] =>
-  (key !== null && key !== undefined) ? key : null
+  key !== null && key !== undefined ? key : null
 
 const normalizeRef = ({
   ref,
@@ -438,7 +445,7 @@ const normalizeRef = ({
     ref = `${ref}`
   }
   return (
-    (ref !== null && ref !== undefined)
+    ref !== null && ref !== undefined
       ? isString(ref) || isRef(ref) || isFunction(ref)
         ? { i: currentRenderingInstance, r: ref, k: ref_key, f: !!ref_for }
         : ref
@@ -586,7 +593,8 @@ function _createVNode(
   if (props) {
     // for reactive or proxy objects, we need to clone it to enable mutation.
     props = guardReactiveProps(props)!
-    let { class: klass, style } = props
+    const { class: klass } = props
+    let { style } = props
     if (klass && !isString(klass)) {
       props.class = normalizeClass(klass)
     }
@@ -779,7 +787,7 @@ export function createCommentVNode(
 }
 
 export function normalizeVNode(child: VNodeChild): VNode {
-  if ((child === null || child === undefined) || typeof child === 'boolean') {
+  if (child === null || child === undefined || typeof child === 'boolean') {
     // empty placeholder
     return createVNode(Comment)
   } else if (isArray(child)) {
@@ -811,7 +819,7 @@ export function cloneIfMounted(child: VNode): VNode {
 export function normalizeChildren(vnode: VNode, children: unknown): void {
   let type = 0
   const { shapeFlag } = vnode
-  if ((children === null || children === undefined)) {
+  if (children === null || children === undefined) {
     children = null
   } else if (isArray(children)) {
     type = ShapeFlags.ARRAY_CHILDREN

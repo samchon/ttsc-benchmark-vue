@@ -52,10 +52,14 @@ export function injectHook(
   } else if (__DEV__) {
     const apiName = toHandlerKey(ErrorTypeStrings[type].replace(/ hook$/, ''))
     warn(
-      `${apiName} is called when there is no active component instance to be associated with. Lifecycle injection APIs can only be used during execution of setup().${(__FEATURE_SUSPENSE__
-          ? ` If you are using async setup(), make sure to register lifecycle ` +
-            `hooks before the first await statement.`
-          : ``)}`,
+      `${apiName} is called when there is no active component instance to be ` +
+        `associated with. ` +
+        `Lifecycle injection APIs can only be used during execution of setup().${
+          __FEATURE_SUSPENSE__
+            ? ` If you are using async setup(), make sure to register lifecycle ` +
+              `hooks before the first await statement.`
+            : ``
+        }`,
     )
   }
 }

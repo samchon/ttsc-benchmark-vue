@@ -610,7 +610,8 @@ export function applyOptions(instance: ComponentInternalInstance): void {
         }
       } else if (__DEV__) {
         warn(
-          `Method "${key}" has type "${typeof methodHandler}" in the component definition. Did you reference the function correctly?`,
+          `Method "${key}" has type "${typeof methodHandler}" in the component definition. ` +
+            `Did you reference the function correctly?`,
         )
       }
     }
@@ -770,7 +771,7 @@ export function applyOptions(instance: ComponentInternalInstance): void {
   if (render && instance.render === NOOP) {
     instance.render = render as InternalRenderFunction
   }
-  if ((inheritAttrs !== null && inheritAttrs !== undefined)) {
+  if (inheritAttrs !== null && inheritAttrs !== undefined) {
     instance.inheritAttrs = inheritAttrs
   }
 

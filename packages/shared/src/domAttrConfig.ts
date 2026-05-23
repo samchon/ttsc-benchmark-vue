@@ -19,7 +19,11 @@ export const isSpecialBooleanAttr: (key: string) => boolean =
  * The full list is needed during SSR to produce the correct initial markup.
  */
 export const isBooleanAttr: (key: string) => boolean = /*@__PURE__*/ makeMap(
-  `${specialBooleanAttrs},async,autofocus,autoplay,controls,default,defer,disabled,hidden,inert,loop,open,required,reversed,scoped,seamless,checked,muted,multiple,selected`,
+  `${
+    specialBooleanAttrs
+  },async,autofocus,autoplay,controls,default,defer,disabled,hidden,` +
+    `inert,loop,open,required,reversed,scoped,seamless,` +
+    `checked,muted,multiple,selected`,
 )
 
 /**
@@ -143,7 +147,7 @@ export const isKnownMathMLAttr: (key: string) => boolean =
  * Shared between server-renderer and runtime-core hydration logic
  */
 export function isRenderableAttrValue(value: unknown): boolean {
-  if ((value === null || value === undefined)) {
+  if (value === null || value === undefined) {
     return false
   }
   const type = typeof value

@@ -276,7 +276,7 @@ export function buildSlots(
             createFunctionExpression(
               createForLoopParams(parseResult),
               buildDynamicSlot(slotName, slotFunction),
-              true,
+              true /* force newline */,
             ),
           ]),
         )
@@ -356,6 +356,8 @@ export function buildSlots(
     slotsProperties.concat(
       createObjectProperty(
         `_`,
+        // 2 = compiled but dynamic = can skip normalization, but must run diff
+        // 1 = compiled and static = can skip normalization AND diff as optimized
         createSimpleExpression(
           slotFlag + (__DEV__ ? ` /* ${slotFlagsText[slotFlag]} */` : ``),
           false,
@@ -386,7 +388,7 @@ function buildDynamicSlot(
     createObjectProperty(`name`, name),
     createObjectProperty(`fn`, fn),
   ]
-  if ((index !== null && index !== undefined)) {
+  if (index !== null && index !== undefined) {
     props.push(
       createObjectProperty(`key`, createSimpleExpression(String(index), true)),
     )

@@ -89,7 +89,8 @@ export const transformSrcset: NodeTransform = (
             let needImportTransform = false
 
             imageCandidates.forEach(candidate => {
-              let { url, descriptor } = candidate
+              const { url } = candidate
+              let { descriptor } = candidate
               descriptor = descriptor ? ` ${descriptor}` : ``
               if (url[0] === '.') {
                 candidate.url = (path.posix || path).join(base, url)

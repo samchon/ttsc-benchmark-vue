@@ -412,7 +412,7 @@ function baseCreateRenderer(
         processCommentNode(n1, n2, container, anchor)
         break
       case Static:
-        if ((n1 === null || n1 === undefined)) {
+        if (n1 === null || n1 === undefined) {
           mountStaticNode(n2, container, anchor, namespace)
         } else if (__DEV__) {
           patchStaticNode(n1, n2, container, namespace)
@@ -488,15 +488,20 @@ function baseCreateRenderer(
     }
 
     // set ref
-    if ((ref !== null && ref !== undefined) && parentComponent) {
+    if (ref !== null && ref !== undefined && parentComponent) {
       setRef(ref, n1 && n1.ref, parentSuspense, n2 || n1, !n2)
-    } else if ((ref === null || ref === undefined) && n1 && (n1.ref !== null && n1.ref !== undefined)) {
+    } else if (
+      (ref === null || ref === undefined) &&
+      n1 &&
+      n1.ref !== null &&
+      n1.ref !== undefined
+    ) {
       setRef(n1.ref, null, parentSuspense, n1, true)
     }
   }
 
   const processText: ProcessTextOrCommentFn = (n1, n2, container, anchor) => {
-    if ((n1 === null || n1 === undefined)) {
+    if (n1 === null || n1 === undefined) {
       hostInsert(
         (n2.el = hostCreateText(n2.children as string)),
         container,
@@ -516,7 +521,7 @@ function baseCreateRenderer(
     container,
     anchor,
   ) => {
-    if ((n1 === null || n1 === undefined)) {
+    if (n1 === null || n1 === undefined) {
       hostInsert(
         (n2.el = hostCreateComment((n2.children as string) || '')),
         container,
@@ -614,7 +619,7 @@ function baseCreateRenderer(
       namespace = 'mathml'
     }
 
-    if ((n1 === null || n1 === undefined)) {
+    if (n1 === null || n1 === undefined) {
       mountElement(
         n2,
         container,
@@ -661,16 +666,15 @@ function baseCreateRenderer(
     slotScopeIds: string[] | null,
     optimized: boolean,
   ) => {
-    let el: RendererElement
     let vnodeHook: VNodeHook | undefined | null
     const { props, shapeFlag, transition, dirs } = vnode
 
-    el = vnode.el = hostCreateElement(
+    const el: RendererElement = (vnode.el = hostCreateElement(
       vnode.type as string,
       namespace,
       props && props.is,
       props,
-    )
+    ))
 
     // mount children first, since some props may rely on child content
     // being already rendered, e.g. `<select value>`
@@ -837,7 +841,8 @@ function baseCreateRenderer(
     if (__DEV__ || __FEATURE_PROD_DEVTOOLS__) {
       el.__vnode = n2
     }
-    let { patchFlag, dynamicChildren, dirs } = n2
+    const { dirs } = n2
+    let { patchFlag, dynamicChildren } = n2
     // #1426 take the old vnode's patch flag into account since user may clone a
     // compiler-generated vnode, which de-opts to FULL_PROPS
     patchFlag |= n1.patchFlag & PatchFlags.FULL_PROPS
@@ -865,8 +870,10 @@ function baseCreateRenderer(
     // #9135 innerHTML / textContent unset needs to happen before possible
     // new children mount
     if (
-      (oldProps.innerHTML && (newProps.innerHTML === null || newProps.innerHTML === undefined)) ||
-      (oldProps.textContent && (newProps.textContent === null || newProps.textContent === undefined))
+      (oldProps.innerHTML &&
+        (newProps.innerHTML === null || newProps.innerHTML === undefined)) ||
+      (oldProps.textContent &&
+        (newProps.textContent === null || newProps.textContent === undefined))
     ) {
       hostSetElementText(el, '')
     }
@@ -951,19 +958,19 @@ function baseCreateRenderer(
           hostSetElementText(el, n2.children as string)
         }
       }
-    } else if (!optimized && (dynamicChildren === null || dynamicChildren === undefined)) {
+    } else if (
+      !optimized &&
+      (dynamicChildren === null || dynamicChildren === undefined)
+    ) {
       // unoptimized, full diff
       patchProps(el, oldProps, newProps, parentComponent, namespace)
     }
 
     if ((vnodeHook = newProps.onVnodeUpdated) || dirs) {
-      queuePostRenderEffect(
-        () => {
-          vnodeHook && invokeVNodeHook(vnodeHook, parentComponent, n2, n1)
-          dirs && invokeDirectiveHook(n2, n1, parentComponent, 'updated')
-        },
-        parentSuspense,
-      )
+      queuePostRenderEffect(() => {
+        vnodeHook && invokeVNodeHook(vnodeHook, parentComponent, n2, n1)
+        dirs && invokeDirectiveHook(n2, n1, parentComponent, 'updated')
+      }, parentSuspense)
     }
   }
 
@@ -1064,7 +1071,8 @@ function baseCreateRenderer(
     const fragmentStartAnchor = (n2.el = n1 ? n1.el : hostCreateText(''))!
     const fragmentEndAnchor = (n2.anchor = n1 ? n1.anchor : hostCreateText(''))!
 
-    let { patchFlag, dynamicChildren, slotScopeIds: fragmentSlotScopeIds } = n2
+    const { slotScopeIds: fragmentSlotScopeIds } = n2
+    let { patchFlag, dynamicChildren } = n2
 
     if (
       __DEV__ &&
@@ -1084,7 +1092,7 @@ function baseCreateRenderer(
         : fragmentSlotScopeIds
     }
 
-    if ((n1 === null || n1 === undefined)) {
+    if (n1 === null || n1 === undefined) {
       hostInsert(fragmentStartAnchor, container, anchor)
       hostInsert(fragmentEndAnchor, container, anchor)
       // a fragment can only have array children
@@ -1170,7 +1178,7 @@ function baseCreateRenderer(
     optimized: boolean,
   ) => {
     n2.slotScopeIds = slotScopeIds
-    if ((n1 === null || n1 === undefined)) {
+    if (n1 === null || n1 === undefined) {
       if (n2.shapeFlag & ShapeFlags.COMPONENT_KEPT_ALIVE) {
         ;(parentComponent!.ctx as KeepAliveContext).activate(
           n2,
@@ -1466,7 +1474,8 @@ function baseCreateRenderer(
         // #2458: deference mount-only object parameters to prevent memleaks
         initialVNode = container = anchor = null as any
       } else {
-        let { next, bu, u, parent, vnode } = instance
+        const { bu, u, parent, vnode } = instance
+        let { next } = instance
 
         if (__FEATURE_SUSPENSE__) {
           const nonHydratedAsyncRoot = locateNonHydratedAsyncRoot(instance)
@@ -1924,7 +1933,7 @@ function baseCreateRenderer(
         const nextChild = (c2[i] = optimized
           ? cloneIfMounted(c2[i] as VNode)
           : normalizeVNode(c2[i]))
-        if ((nextChild.key !== null && nextChild.key !== undefined)) {
+        if (nextChild.key !== null && nextChild.key !== undefined) {
           if (__DEV__ && keyToNewIndexMap.has(nextChild.key)) {
             warn(
               `Duplicate keys found during update:`,
@@ -1960,7 +1969,7 @@ function baseCreateRenderer(
           continue
         }
         let newIndex
-        if ((prevChild.key !== null && prevChild.key !== undefined)) {
+        if (prevChild.key !== null && prevChild.key !== undefined) {
           newIndex = keyToNewIndexMap.get(prevChild.key)
         } else {
           // key-less node, try to locate a key-less node of the same type
@@ -2145,14 +2154,14 @@ function baseCreateRenderer(
     }
 
     // unset ref
-    if ((ref !== null && ref !== undefined)) {
+    if (ref !== null && ref !== undefined) {
       pauseTracking()
       setRef(ref, null, parentSuspense, vnode, true)
       resetTracking()
     }
 
     // #6593 should clean memo cache when unmount
-    if ((cacheIndex !== null && cacheIndex !== undefined)) {
+    if (cacheIndex !== null && cacheIndex !== undefined) {
       parentComponent!.renderCache[cacheIndex] = undefined
     }
 
@@ -2229,7 +2238,10 @@ function baseCreateRenderer(
     // v-for + v-memo stores cached vnodes inside renderList's array cache rather
     // than component renderCache. Invalidate detached cached vnodes after
     // unmount so a later v-if remount won't reuse a vnode whose DOM is gone.
-    const shouldInvalidateMemo = (memo !== null && memo !== undefined) && (cacheIndex === null || cacheIndex === undefined)
+    const shouldInvalidateMemo =
+      memo !== null &&
+      memo !== undefined &&
+      (cacheIndex === null || cacheIndex === undefined)
 
     if (
       (shouldInvokeVnodeHook &&
@@ -2360,12 +2372,9 @@ function baseCreateRenderer(
         parentSuspense,
       )
     }
-    queuePostRenderEffect(
-      () => {
-        instance.isUnmounted = true
-      },
-      parentSuspense,
-    )
+    queuePostRenderEffect(() => {
+      instance.isUnmounted = true
+    }, parentSuspense)
 
     if (__DEV__ || __FEATURE_PROD_DEVTOOLS__) {
       devtoolsComponentRemoved(instance)
@@ -2403,7 +2412,7 @@ function baseCreateRenderer(
   let isFlushing = false
   const render: RootRenderFunction = (vnode, container, namespace) => {
     let instance
-    if ((vnode === null || vnode === undefined)) {
+    if (vnode === null || vnode === undefined) {
       if (container._vnode) {
         unmount(container._vnode, null, null, true)
         instance = container._vnode.component

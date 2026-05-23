@@ -150,9 +150,10 @@ export const cssVarsPlugin: PluginCreator<CssVarsPluginOptions> = opts => {
           const end = lexBinding(value, start)
           if (end !== null) {
             const variable = normalizeExpression(value.slice(start, end))
-            transformed +=
-              value.slice(lastIndex, match.index) +
-              `var(--${genVarName(id, variable, isProd)})`
+            transformed += `${value.slice(
+              lastIndex,
+              match.index,
+            )}var(--${genVarName(id, variable, isProd)})`
             lastIndex = end + 1
           }
         }
@@ -201,13 +202,16 @@ export function genNormalScriptCssVarsCode(
   defaultVar: string,
 ): string {
   return (
-    `\nimport { ${CSS_VARS_HELPER} as _${CSS_VARS_HELPER} } from 'vue'\nconst __injectCSSVars__ = () => {\n${genCssVarsCode(
+    `\nimport { ${CSS_VARS_HELPER} as _${CSS_VARS_HELPER} } from 'vue'\n` +
+    `const __injectCSSVars__ = () => {\n${genCssVarsCode(
       cssVars,
       bindings,
       id,
       isProd,
-    )}}\nconst __setup__ = ${defaultVar}.setup\n${defaultVar}.setup = __setup__\n  ? (props, ctx) => { __injectCSSVars__();return __setup__(props, ctx) }
-  : __injectCSSVars__
-`
+    )}}\n` +
+    `const __setup__ = ${defaultVar}.setup\n` +
+    `${defaultVar}.setup = __setup__\n` +
+    `  ? (props, ctx) => { __injectCSSVars__();return __setup__(props, ctx) }\n` +
+    `  : __injectCSSVars__\n`
   )
 }

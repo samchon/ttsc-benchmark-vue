@@ -511,11 +511,13 @@ export const PublicInstanceProxyHandlers: ProxyHandler<any> = {
         warn(
           `Property ${JSON.stringify(
             key,
-          )} must be accessed via $data because it starts with a reserved character ("$" or "_") and is not proxied on the render context.`,
+          )} must be accessed via $data because it starts with a reserved ` +
+            `character ("$" or "_") and is not proxied on the render context.`,
         )
       } else if (instance === currentRenderingInstance) {
         warn(
-          `Property ${JSON.stringify(key)} was accessed during render but is not defined on instance.`,
+          `Property ${JSON.stringify(key)} was accessed during render ` +
+            `but is not defined on instance.`,
         )
       }
     }
@@ -551,7 +553,8 @@ export const PublicInstanceProxyHandlers: ProxyHandler<any> = {
     if (key[0] === '$' && key.slice(1) in instance) {
       __DEV__ &&
         warn(
-          `Attempting to mutate public property "${key}". Properties starting with $ are reserved and readonly.`,
+          `Attempting to mutate public property "${key}". ` +
+            `Properties starting with $ are reserved and readonly.`,
         )
       return false
     } else {
@@ -595,7 +598,7 @@ export const PublicInstanceProxyHandlers: ProxyHandler<any> = {
     key: string,
     descriptor: PropertyDescriptor,
   ) {
-    if ((descriptor.get !== null && descriptor.get !== undefined)) {
+    if (descriptor.get !== null && descriptor.get !== undefined) {
       // invalidate key cache of a getter based property #5417
       target._.accessCache![key] = 0
     } else if (hasOwn(descriptor, 'value')) {
@@ -657,6 +660,8 @@ export function createDevRenderContext(instance: ComponentInternalInstance) {
       configurable: true,
       enumerable: false,
       get: () => publicPropertiesMap[key](instance),
+      // intercepted by the proxy so no need for implementation,
+      // but needed to prevent set errors
       set: NOOP,
     })
   })
@@ -695,7 +700,8 @@ export function exposeSetupStateOnRenderContext(
         warn(
           `setup() return property ${JSON.stringify(
             key,
-          )} should not start with "$" or "_" which are reserved prefixes for Vue internals.`,
+          )} should not start with "$" or "_" ` +
+            `which are reserved prefixes for Vue internals.`,
         )
         return
       }

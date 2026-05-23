@@ -458,7 +458,7 @@ function resolvePropValue(
   isAbsent: boolean,
 ) {
   const opt = options[key]
-  if ((opt !== null && opt !== undefined)) {
+  if (opt !== null && opt !== undefined) {
     const hasDefault = hasOwn(opt, 'default')
     // default values
     if (hasDefault && value === undefined) {
@@ -660,7 +660,7 @@ function validateProps(
   const camelizePropsKey = Object.keys(rawProps).map(key => camelize(key))
   for (const key in options) {
     const opt = options[key]
-    if ((opt === null || opt === undefined)) continue
+    if (opt === null || opt === undefined) continue
     validateProp(
       key,
       resolvedValues[key],
@@ -692,7 +692,7 @@ function validateProp(
     return
   }
   // type check
-  if ((type !== null && type !== undefined) && type !== true && !skipCheck) {
+  if (type !== null && type !== undefined && type !== true && !skipCheck) {
     let isValid = false
     const types = isArray(type) ? type : [type]
     const expectedTypes = []
@@ -763,7 +763,8 @@ function getInvalidTypeMessage(
 ): string {
   if (expectedTypes.length === 0) {
     return (
-      `Prop type [] for prop "${name}" won't match anything. Did you mean to use type Array instead?`
+      `Prop type [] for prop "${name}" won't match anything.` +
+      ` Did you mean to use type Array instead?`
     )
   }
   let message =

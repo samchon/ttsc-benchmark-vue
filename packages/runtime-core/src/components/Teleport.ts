@@ -59,7 +59,10 @@ const resolveTarget = <T = RendererElement>(
       const target = select(targetSelector)
       if (__DEV__ && !target && !isTeleportDisabled(props)) {
         warn(
-          `Failed to locate Teleport target with selector "${targetSelector}". Note the target element must exist before the component is mounted - i.e. the target cannot be rendered by the component itself, and ideally should be outside of the entire Vue component tree.`,
+          `Failed to locate Teleport target with selector "${targetSelector}". ` +
+            `Note the target element must exist before the component is mounted - ` +
+            `i.e. the target cannot be rendered by the component itself, and ` +
+            `ideally should be outside of the entire Vue component tree.`,
         )
       }
       return target as T
@@ -172,7 +175,7 @@ export const TeleportImpl = {
       queuePostRenderEffect(mountJob, parentSuspense)
     }
 
-    if ((n1 === null || n1 === undefined)) {
+    if (n1 === null || n1 === undefined) {
       // insert anchors in the main view
       const placeholder = (n2.el = __DEV__
         ? createComment('teleport start')

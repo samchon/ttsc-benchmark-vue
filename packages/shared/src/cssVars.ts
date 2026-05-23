@@ -3,7 +3,7 @@
  * See https://github.com/vuejs/core/pull/12461#issuecomment-2495804664
  */
 export function normalizeCssVarValue(value: unknown): string {
-  if ((value === null || value === undefined)) {
+  if (value === null || value === undefined) {
     return 'initial'
   }
 

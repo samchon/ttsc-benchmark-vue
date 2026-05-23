@@ -159,7 +159,7 @@ const TransitionGroupImpl: ComponentOptions = /*@__PURE__*/ decorate({
 
       for (let i = 0; i < children.length; i++) {
         const child = children[i]
-        if ((child.key !== null && child.key !== undefined)) {
+        if (child.key !== null && child.key !== undefined) {
           setTransitionHooks(
             child,
             resolveTransitionHooks(child, cssTransitionProps, state, instance),

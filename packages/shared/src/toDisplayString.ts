@@ -24,7 +24,7 @@ const isRef = (val: any): val is { value: unknown } => {
 export const toDisplayString = (val: unknown): string => {
   return isString(val)
     ? val
-    : (val === null || val === undefined)
+    : val === null || val === undefined
       ? ''
       : isArray(val) ||
           (isObject(val) &&

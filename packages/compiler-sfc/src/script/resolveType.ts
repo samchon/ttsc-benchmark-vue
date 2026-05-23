@@ -395,6 +395,7 @@ function mergeElements(
           baseProps[key].key,
           {
             type,
+            // @ts-expect-error
             types: [baseProps[key], props[key]],
           },
           baseProps[key]._ownerScope,
@@ -982,7 +983,9 @@ function importSourceToScope(
         if (loadTS) ts = loadTS()
         if (!ts) {
           return ctx.error(
-            `Failed to resolve import source ${JSON.stringify(source)}. TypeScript is required as a peer dep for vue in order to support resolving types from module imports.`,
+            `Failed to resolve import source ${JSON.stringify(source)}. ` +
+              `TypeScript is required as a peer dep for vue in order ` +
+              `to support resolving types from module imports.`,
             node,
             scope,
           )

@@ -296,7 +296,7 @@ function renderElementVNode(
   slotScopeId?: string,
 ) {
   const tag = vnode.type as string
-  let { props, children, shapeFlag, scopeId } = vnode
+  const { props, children, shapeFlag, scopeId } = vnode
   let openTag = `<${tag}`
 
   if (props) {

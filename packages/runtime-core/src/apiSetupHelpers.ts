@@ -37,7 +37,9 @@ import type { Ref } from '@vue/reactivity'
 // dev only
 const warnRuntimeUsage = (method: string) =>
   warn(
-    `${method}() is a compiler-hint helper that is only usable inside <script setup> of a single file component. Its arguments should be compiled away and passing it at runtime has no effect.`,
+    `${method}() is a compiler-hint helper that is only usable inside ` +
+      `<script setup> of a single file component. Its arguments should be ` +
+      `compiled away and passing it at runtime has no effect.`,
   )
 
 /**

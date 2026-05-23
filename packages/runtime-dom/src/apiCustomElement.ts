@@ -454,6 +454,7 @@ export class VueElement
       if (!hasOwn(this, key)) {
         // exposed properties are readonly
         Object.defineProperty(this, key, {
+          // unwrap ref to be consistent with public instance behavior
           get: () => unref(exposed[key]),
         })
       } else if (__DEV__) {
@@ -811,7 +812,8 @@ export function useHost(caller?: string): VueElement | null {
       )
     } else {
       warn(
-        `${caller || 'useHost'} can only be used in components defined via defineCustomElement.`,
+        `${caller || 'useHost'} can only be used in components defined via ` +
+          `defineCustomElement.`,
       )
     }
   }

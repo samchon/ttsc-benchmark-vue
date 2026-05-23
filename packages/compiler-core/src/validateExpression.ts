@@ -6,12 +6,12 @@ import { ErrorCodes, createCompilerError } from './errors'
 // 'typeof', 'instanceof', and 'in' are allowed
 const prohibitedKeywordRE = new RegExp(
   `\\b${(
-      'arguments,await,break,case,catch,class,const,continue,debugger,default,' +
-      'delete,do,else,export,extends,finally,for,function,if,import,let,new,' +
-      'return,super,switch,throw,try,var,void,while,with,yield'
-    )
-      .split(',')
-      .join('\\b|\\b')}\\b`,
+    'arguments,await,break,case,catch,class,const,continue,debugger,default,' +
+    'delete,do,else,export,extends,finally,for,function,if,import,let,new,' +
+    'return,super,switch,throw,try,var,void,while,with,yield'
+  )
+    .split(',')
+    .join('\\b|\\b')}\\b`,
 )
 
 // strip strings in expressions

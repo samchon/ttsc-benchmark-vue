@@ -143,10 +143,7 @@ export function watch(
     return traverse(source)
   }
 
-  let effect: ReactiveEffect
   let getter: () => any
-  let cleanup: (() => void) | undefined
-  let boundCleanup: typeof onWatcherCleanup
   let forceTrigger = false
   let isMultiSource = false
 
@@ -283,15 +280,16 @@ export function watch(
     augmentJob(job)
   }
 
-  effect = new ReactiveEffect(getter)
+  const effect: ReactiveEffect = new ReactiveEffect(getter)
 
   effect.scheduler = scheduler
     ? () => scheduler(job, false)
     : (job as EffectScheduler)
 
-  boundCleanup = fn => onWatcherCleanup(fn, false, effect)
+  const boundCleanup: typeof onWatcherCleanup = fn =>
+    onWatcherCleanup(fn, false, effect)
 
-  cleanup = effect.onStop = () => {
+  const cleanup: (() => void) | undefined = (effect.onStop = () => {
     const cleanups = cleanupMap.get(effect)
     if (cleanups) {
       if (call) {
@@ -301,7 +299,7 @@ export function watch(
       }
       cleanupMap.delete(effect)
     }
-  }
+  })
 
   if (__DEV__) {
     effect.onTrack = options.onTrack

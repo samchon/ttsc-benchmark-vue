@@ -354,7 +354,7 @@ function stringifyElement(
         }
         // constant v-bind, e.g. :foo="1"
         let evaluated = evaluateConstant(exp)
-        if ((evaluated !== null && evaluated !== undefined)) {
+        if (evaluated !== null && evaluated !== undefined) {
           const arg = p.arg && (p.arg as SimpleExpressionNode).content
           if (arg === 'class') {
             evaluated = normalizeClass(evaluated)

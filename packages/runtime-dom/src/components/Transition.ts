@@ -300,7 +300,7 @@ export function resolveTransitionProps(
 function normalizeDuration(
   duration: TransitionProps['duration'],
 ): [number, number] | null {
-  if ((duration === null || duration === undefined)) {
+  if (duration === null || duration === undefined) {
     return null
   } else if (isObject(duration)) {
     return [NumberOf(duration.enter), NumberOf(duration.leave)]
@@ -358,7 +358,7 @@ function whenTransitionEnds(
     }
   }
 
-  if ((explicitTimeout !== null && explicitTimeout !== undefined)) {
+  if (explicitTimeout !== null && explicitTimeout !== undefined) {
     return setTimeout(resolveIfNotStale, explicitTimeout)
   }
 

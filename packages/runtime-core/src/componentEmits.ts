@@ -176,10 +176,14 @@ export function emit(
     const lowerCaseEvent = event.toLowerCase()
     if (lowerCaseEvent !== event && props[toHandlerKey(lowerCaseEvent)]) {
       warn(
-        `Event "${lowerCaseEvent}" is emitted in component ${formatComponentName(
+        `Event "${lowerCaseEvent}" is emitted in component ` +
+          `${formatComponentName(
             instance,
             instance.type,
-          )} but the handler is registered for "${event}". Note that HTML attributes are case-insensitive and you cannot use v-on to listen to camelCase events when using in-DOM templates. You should probably use "${hyphenate(
+          )} but the handler is registered for "${event}". ` +
+          `Note that HTML attributes are case-insensitive and you cannot use ` +
+          `v-on to listen to camelCase events when using in-DOM templates. ` +
+          `You should probably use "${hyphenate(
             event,
           )}" instead of "${event}".`,
       )

@@ -358,7 +358,7 @@ export function createHydrationFunctions(
         }
     }
 
-    if ((ref !== null && ref !== undefined)) {
+    if (ref !== null && ref !== undefined) {
       setRef(ref, null, parentSuspense, vnode)
     }
 
@@ -544,14 +544,11 @@ export function createHydrationFunctions(
         dirs ||
         needCallTransitionHooks
       ) {
-        queueEffectWithSuspense(
-          () => {
-            vnodeHooks && invokeVNodeHook(vnodeHooks, parentComponent, vnode)
-            needCallTransitionHooks && transition!.enter(el)
-            dirs && invokeDirectiveHook(vnode, null, parentComponent, 'mounted')
-          },
-          parentSuspense,
-        )
+        queueEffectWithSuspense(() => {
+          vnodeHooks && invokeVNodeHook(vnodeHooks, parentComponent, vnode)
+          needCallTransitionHooks && transition!.enter(el)
+          dirs && invokeDirectiveHook(vnode, null, parentComponent, 'mounted')
+        }, parentSuspense)
       }
     }
 
@@ -853,7 +850,7 @@ function propHasMismatch(
     if (isBooleanAttr(key)) {
       actual = el.hasAttribute(key)
       expected = includeBooleanAttr(clientValue)
-    } else if ((clientValue === null || clientValue === undefined)) {
+    } else if (clientValue === null || clientValue === undefined) {
       actual = el.hasAttribute(key)
       expected = false
     } else {
@@ -875,17 +872,20 @@ function propHasMismatch(
     }
   }
 
-  if ((mismatchType !== null && mismatchType !== undefined) && !isMismatchAllowed(
-    el,
-    mismatchType,
-  )) {
+  if (
+    mismatchType !== null &&
+    mismatchType !== undefined &&
+    !isMismatchAllowed(el, mismatchType)
+  ) {
     const format = (v: any) =>
       v === false ? `(not rendered)` : `${mismatchKey}="${v}"`
     const preSegment = `Hydration ${MismatchTypeString[mismatchType]} mismatch on`
     const postSegment =
-      `\n  - rendered on server: ${format(actual)}\n  - expected on client: ${format(expected)}
-  Note: this mismatch is check-only. The DOM will not be rectified in production due to performance overhead.
-  You should fix the source of the mismatch.`
+      `\n  - rendered on server: ${format(actual)}` +
+      `\n  - expected on client: ${format(expected)}` +
+      `\n  Note: this mismatch is check-only. The DOM will not be rectified ` +
+      `in production due to performance overhead.` +
+      `\n  You should fix the source of the mismatch.`
     if (__TEST__) {
       // during tests, log the full message in one single string for easier
       // debugging.
@@ -994,7 +994,7 @@ function isMismatchAllowed(
     }
   }
   const allowedAttr = el && el.getAttribute(allowMismatchAttr)
-  if ((allowedAttr === null || allowedAttr === undefined)) {
+  if (allowedAttr === null || allowedAttr === undefined) {
     return false
   } else if (allowedAttr === '') {
     return true

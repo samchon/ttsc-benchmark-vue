@@ -98,7 +98,7 @@ export function getStringLiteralKey(
 }
 
 const identity = (str: string) => str
-const fileNameLowerCaseRegExp = /[^\u0130\u0131\u00DFa-z0-9\\/:\-_\. ]+/g
+const fileNameLowerCaseRegExp = /[^\u0130\u0131\u00DFa-z0-9\\/:\-_. ]+/g
 const toLowerCase = (str: string) => str.toLowerCase()
 
 function toFileNameLowerCase(x: string) {
@@ -134,7 +134,7 @@ export const joinPaths: (...paths: string[]) => string = (path.posix || path)
  * e.g. onUpdate:modelValue -> "onUpdate:modelValue"
  */
 export const propNameEscapeSymbolsRE: RegExp =
-  /[ !"#$%&'()*+,./:;<=>?@[\\\]^`{|}~\-]/
+  /[ !"#$%&'()*+,./:;<=>?@[\\\]^`{|}~-]/
 
 export function getEscapedPropName(key: string): string {
   return propNameEscapeSymbolsRE.test(key) ? JSON.stringify(key) : key

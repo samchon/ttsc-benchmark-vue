@@ -73,7 +73,8 @@ export function processDefineProps(
   if (node.typeParameters) {
     if (ctx.propsRuntimeDecl) {
       ctx.error(
-        `${DEFINE_PROPS}() cannot accept both type and non-type arguments at the same time. Use one or the other.`,
+        `${DEFINE_PROPS}() cannot accept both type and non-type arguments ` +
+          `at the same time. Use one or the other.`,
         node,
       )
     }
@@ -122,8 +123,9 @@ function processWithDefaults(
   }
   if (declId && declId.type === 'ObjectPattern') {
     ctx.warn(
-      `${WITH_DEFAULTS}() is unnecessary when using destructure with ${DEFINE_PROPS}().\nReactive destructure will be disabled when using withDefaults().
-Prefer using destructure default values, e.g. const { foo = 1 } = defineProps(...). `,
+      `${WITH_DEFAULTS}() is unnecessary when using destructure with ${DEFINE_PROPS}().\n` +
+        `Reactive destructure will be disabled when using withDefaults().\n` +
+        `Prefer using destructure default values, e.g. const { foo = 1 } = defineProps(...). `,
       node.callee,
     )
   }

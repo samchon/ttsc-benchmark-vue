@@ -61,10 +61,12 @@ export function inject(
     // #11488, in a nested createApp, prioritize using the provides from currentApp
     // #13212, for custom elements we must get injected values from its appContext
     // as it already inherits the provides object from the parent element
-    let provides = currentApp
+    const provides = currentApp
       ? currentApp._context.provides
       : instance
-        ? (instance.parent === null || instance.parent === undefined) || instance.ce
+        ? instance.parent === null ||
+          instance.parent === undefined ||
+          instance.ce
           ? instance.vnode.appContext && instance.vnode.appContext.provides
           : instance.parent.provides
         : undefined

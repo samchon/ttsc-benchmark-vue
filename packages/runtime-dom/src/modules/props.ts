@@ -16,7 +16,7 @@ export function patchDOMProp(
   if (key === 'innerHTML' || key === 'textContent') {
     // null value case is handled in renderer patchElement before patching
     // children
-    if ((value !== null && value !== undefined)) {
+    if (value !== null && value !== undefined) {
       el[key] = key === 'innerHTML' ? unsafeToTrustedHTML(value) : value
     }
     return
@@ -35,7 +35,7 @@ export function patchDOMProp(
     const oldValue =
       tag === 'OPTION' ? el.getAttribute('value') || '' : el.value
     const newValue =
-      (value === null || value === undefined)
+      value === null || value === undefined
         ? // #11647: value should be set as empty string for null and undefined,
           // but <input type="checkbox"> should be set as 'on'.
           el.type === 'checkbox'
@@ -45,7 +45,7 @@ export function patchDOMProp(
     if (oldValue !== newValue || !('_value' in el)) {
       el.value = newValue
     }
-    if ((value === null || value === undefined)) {
+    if (value === null || value === undefined) {
       el.removeAttribute(key)
     }
     // store value as _value as well since
@@ -55,7 +55,7 @@ export function patchDOMProp(
   }
 
   let needRemove = false
-  if (value === '' || (value === null || value === undefined)) {
+  if (value === '' || value === null || value === undefined) {
     const type = typeof el[key]
     if (type === 'boolean') {
       // e.g. <select multiple> compiles to { multiple: '' }

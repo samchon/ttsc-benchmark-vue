@@ -124,7 +124,8 @@ function resolveAsset(
     return res
   } else if (__DEV__) {
     warn(
-      `resolve${capitalize(type.slice(0, -1))} can only be used in render() or setup().`,
+      `resolve${capitalize(type.slice(0, -1))} ` +
+        `can only be used in render() or setup().`,
     )
   }
 }

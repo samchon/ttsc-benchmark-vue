@@ -555,14 +555,13 @@ export function getTransitionRawChildren(
   let ret: VNode[] = []
   let keyedFragmentCount = 0
   for (let i = 0; i < children.length; i++) {
-    let child = children[i]
+    const child = children[i]
     // #5360 inherit parent key in case of <template v-for>
     const key =
-      (parentKey === null || parentKey === undefined)
+      parentKey === null || parentKey === undefined
         ? child.key
-        : String(parentKey) + String(
-            (child.key !== null && child.key !== undefined) ? child.key : i,
-          )
+        : String(parentKey) +
+          String(child.key !== null && child.key !== undefined ? child.key : i)
     // handle fragment children case, e.g. v-for
     if (child.type === Fragment) {
       if (child.patchFlag & PatchFlags.KEYED_FRAGMENT) keyedFragmentCount++
@@ -573,7 +572,7 @@ export function getTransitionRawChildren(
     // comment placeholders should be skipped, e.g. v-if
     else if (keepComment || child.type !== Comment) {
       ret.push(
-        (key !== null && key !== undefined) ? cloneVNode(child, { key }) : child,
+        key !== null && key !== undefined ? cloneVNode(child, { key }) : child,
       )
     }
   }

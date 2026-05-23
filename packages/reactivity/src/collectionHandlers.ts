@@ -319,7 +319,11 @@ function checkIdentityKeys(
   if (rawKey !== key && has.call(target, rawKey)) {
     const type = toRawType(target)
     warn(
-      `Reactive ${type} contains both the raw and reactive versions of the same object${type === `Map` ? ` as keys` : ``}, which can lead to inconsistencies. Avoid differentiating between the raw and reactive versions of an object and only use the reactive version if possible.`,
+      `Reactive ${type} contains both the raw and reactive ` +
+        `versions of the same object${type === `Map` ? ` as keys` : ``}, ` +
+        `which can lead to inconsistencies. ` +
+        `Avoid differentiating between the raw and reactive versions ` +
+        `of an object and only use the reactive version if possible.`,
     )
   }
 }

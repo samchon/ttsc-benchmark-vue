@@ -150,7 +150,6 @@ export function renderComponentRoot(
   // in dev mode, comments are preserved, and it's possible for a template
   // to have comments along side the root element which makes it a fragment
   let root = result
-  // eslint-disable-next-line prefer-const -- reassigned via destructuring below
   let setRoot: SetRootFn = undefined
   if (
     __DEV__ &&
@@ -195,12 +194,20 @@ export function renderComponentRoot(
         }
         if (extraAttrs.length) {
           warn(
-            `Extraneous non-props attributes (${extraAttrs.join(', ')}) were passed to component but could not be automatically inherited because component renders fragment or text or teleport root nodes.`,
+            `Extraneous non-props attributes (` +
+              `${extraAttrs.join(', ')}) ` +
+              `were passed to component but could not be automatically inherited ` +
+              `because component renders fragment or text or teleport root nodes.`,
           )
         }
         if (eventAttrs.length) {
           warn(
-            `Extraneous non-emits event listeners (${eventAttrs.join(', ')}) were passed to component but could not be automatically inherited because component renders fragment or text root nodes. If the listener is intended to be a component custom event listener only, declare it using the "emits" option.`,
+            `Extraneous non-emits event listeners (` +
+              `${eventAttrs.join(', ')}) ` +
+              `were passed to component but could not be automatically inherited ` +
+              `because component renders fragment or text root nodes. ` +
+              `If the listener is intended to be a component custom event listener only, ` +
+              `declare it using the "emits" option.`,
           )
         }
       }

@@ -72,7 +72,7 @@ export const ssrTransformModel: DirectiveTransform = (dir, node, context) => {
             ]),
             createSimpleExpression(' selected', true),
             createSimpleExpression('', true),
-            false,
+            false /* no newline */,
           ),
         )
       }
