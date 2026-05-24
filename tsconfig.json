@@ -27,7 +27,8 @@
       "vue": ["packages/vue/src"]
     },
     "isolatedDeclarations": true,
-    "composite": true
+    "composite": true,
+    "ignoreDeprecations": "6.0"
   },
   "include": [
     "packages/global.d.ts",
