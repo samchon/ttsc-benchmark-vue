@@ -171,10 +171,7 @@ export const ssrTransformElement: NodeTransform = (node, context) => {
                   tempExp,
                   createCallExpression(
                     context.helper(SSR_GET_DYNAMIC_MODEL_PROPS),
-                    [
-                      tempExp, // existing props
-                      vModel.exp!, // model
-                    ],
+                    [tempExp, vModel.exp!],
                   ),
                 ]),
               ]),
@@ -299,7 +296,7 @@ export const ssrTransformElement: NodeTransform = (node, context) => {
                         ),
                         createSimpleExpression(` ${attrName}`, true),
                         createSimpleExpression('', true),
-                        false /* no newline */,
+                        false,
                       ),
                     )
                   } else if (isSSRSafeAttrName(attrName)) {

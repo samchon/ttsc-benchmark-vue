@@ -354,7 +354,7 @@ export function createElementBlock(
       patchFlag,
       dynamicProps,
       shapeFlag,
-      true /* isBlock */,
+      true,
     ),
   )
 }
@@ -374,14 +374,7 @@ export function createBlock(
   dynamicProps?: string[],
 ): VNode {
   return setupBlock(
-    createVNode(
-      type,
-      props,
-      children,
-      patchFlag,
-      dynamicProps,
-      true /* isBlock: prevent a block from tracking itself */,
-    ),
+    createVNode(type, props, children, patchFlag, dynamicProps, true),
   )
 }
 

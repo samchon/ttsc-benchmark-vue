@@ -454,7 +454,6 @@ export class VueElement
       if (!hasOwn(this, key)) {
         // exposed properties are readonly
         Object.defineProperty(this, key, {
-          // unwrap ref to be consistent with public instance behavior
           get: () => unref(exposed[key]),
         })
       } else if (__DEV__) {

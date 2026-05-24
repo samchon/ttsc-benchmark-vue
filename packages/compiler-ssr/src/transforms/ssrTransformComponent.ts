@@ -166,7 +166,6 @@ export const ssrTransformComponent: NodeTransform = (node, context) => {
         type: WIP_SLOT,
         fn,
         children,
-        // also collect the corresponding vnode branch built earlier
         vnodeBranch: vnodeBranches[wipEntries.length],
       })
       return fn
@@ -240,12 +239,7 @@ export function ssrProcessComponent(
       // is called by `_ssrRenderSlot`.
       fn.body = createIfStatement(
         createSimpleExpression(`_push`, false),
-        processChildrenAsStatement(
-          wipEntries[i],
-          context,
-          false,
-          true /* withSlotScopeId */,
-        ),
+        processChildrenAsStatement(wipEntries[i], context, false, true),
         vnodeBranch,
       )
     }

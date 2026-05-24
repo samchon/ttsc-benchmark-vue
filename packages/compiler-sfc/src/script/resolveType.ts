@@ -395,11 +395,13 @@ function mergeElements(
           baseProps[key].key,
           {
             type,
-            // @ts-expect-error
-            types: [baseProps[key], props[key]],
+            types: [
+              baseProps[key] as unknown as TSType,
+              props[key] as unknown as TSType,
+            ],
           },
           baseProps[key]._ownerScope,
-          baseProps[key].optional || props[key].optional,
+          !!(baseProps[key].optional || props[key].optional),
         )
       }
     }
