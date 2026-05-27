@@ -19,6 +19,7 @@ export default {
     'dot-notation': 'error',
     'no-extra-boolean-cast': 'error',
     'no-useless-escape': 'error',
+    'prefer-template': 'warn',
     'typescript/prefer-as-const': 'error',
     'typescript/prefer-namespace-keyword': 'error',
   },
