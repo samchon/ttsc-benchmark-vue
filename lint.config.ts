@@ -1,6 +1,8 @@
 import type { ITtscLintConfig } from '@ttsc/lint'
 
 export default {
+  files: ['packages/*/src/**/*.ts'],
+  ignores: ['**/dist/**', '**/temp/**'],
   format: {
     printWidth: 80,
     tabWidth: 2,
