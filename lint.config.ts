@@ -8,6 +8,7 @@ export default {
     trailingComma: 'all',
     singleQuote: true,
     semi: false,
+    arrowParens: 'avoid',
   },
   rules: {
     'no-var': 'error',
